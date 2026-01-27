@@ -2,8 +2,18 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Coming Soon</title>
+
+<title>Elaaf School System | Quality Education in Karachi – Coming Soon</title>
+
+<meta name="description" content="Elaaf School System is launching soon in Karachi. We provide quality education with experienced teachers, a modern learning environment, and strong academic foundations for students.">
+
+<meta name="robots" content="index, follow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Elaaf School System – Coming Soon in Karachi">
+<meta property="og:description" content="Elaaf School System in Karachi is launching soon. Admissions opening shortly.">
+<meta property="og:type" content="website">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -58,11 +68,10 @@ h1 {
 
 p {
   font-size: clamp(15px, 3vw, 18px);
-  margin-bottom: 25px;
+  margin-bottom: 20px;
   opacity: 0.9;
 }
 
-/* 🔥 RESPONSIVE COUNTDOWN */
 #countdown {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
@@ -88,6 +97,7 @@ p {
   display: flex;
   width: 100%;
   max-width: 420px;
+  margin-bottom: 30px;
 }
 
 .email-box input {
@@ -108,13 +118,29 @@ p {
 }
 
 .email-box button:hover {
-  background: #e68900;
+  background: #a31218;
 }
 
 footer {
-  margin-top: 35px;
+  margin-top: 20px;
   font-size: 14px;
   opacity: 0.7;
+}
+
+.seo-section {
+  max-width: 600px;
+  margin-top: 30px;
+  opacity: 0.9;
+}
+
+.seo-section h2 {
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+.seo-section p {
+  font-size: 15px;
+  margin-bottom: 10px;
 }
 </style>
 </head>
@@ -122,12 +148,13 @@ footer {
 <body>
 
 <div class="container">
+
   <div class="logo">
-    <img src="logo-elaaf.png" alt="Elaaf Logo">
+    <img src="logo-elaaf.png" alt="Elaaf School System Karachi Logo">
   </div>
 
   <h1>Coming Soon</h1>
-  <p>We are working hard to launch our website. Stay tuned!</p>
+  <p>Elaaf School System is launching soon in Karachi. Stay tuned for admissions.</p>
 
   <div id="countdown">
     <div><span id="days">00</span>Days</div>
@@ -141,36 +168,54 @@ footer {
     <button>Notify Me</button>
   </div>
 
+  <!-- SEO CONTENT -->
+  <section class="seo-section">
+    <h2>Elaaf School System – A Trusted School in Karachi</h2>
+
+    <p>
+      Elaaf School System is a dedicated educational institution in Karachi,
+      focused on providing quality education in a safe and supportive learning
+      environment. Our mission is to build strong academic foundations while
+      nurturing discipline, confidence, and character in students.
+    </p>
+
+    <p>
+      We offer admissions for early years, primary, and secondary classes with
+      qualified teaching staff, a structured curriculum, and modern teaching
+      methodologies. Elaaf School System is committed to academic excellence
+      and holistic student development.
+    </p>
+  </section>
+
   <footer>© 2026 Elaaf School System</footer>
+
 </div>
 
 <script>
-  // FIXED launch date: 26 Feb 2026, 00:00
-  const targetDate = new Date("2026-02-26T00:00:00").getTime();
+const targetDate = new Date("2026-02-26T00:00:00").getTime();
 
-  function updateCountdown() {
-    const now = new Date().getTime();
-    const distance = targetDate - now;
+function updateCountdown() {
+  const now = new Date().getTime();
+  const distance = targetDate - now;
 
-    if (distance <= 0) {
-      document.getElementById("countdown").innerHTML = "We are Live 🚀";
-      return;
-    }
-
-    document.getElementById("days").innerText =
-      Math.floor(distance / (1000 * 60 * 60 * 24));
-    document.getElementById("hours").innerText =
-      Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    document.getElementById("minutes").innerText =
-      Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    document.getElementById("seconds").innerText =
-      Math.floor((distance % (1000 * 60)) / 1000);
+  if (distance <= 0) {
+    document.getElementById("countdown").innerHTML = "We are Live 🚀";
+    return;
   }
 
-  updateCountdown();
-  setInterval(updateCountdown, 1000);
-</script>
+  document.getElementById("days").innerText =
+    Math.floor(distance / (1000 * 60 * 60 * 24));
+  document.getElementById("hours").innerText =
+    Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  document.getElementById("minutes").innerText =
+    Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  document.getElementById("seconds").innerText =
+    Math.floor((distance % (1000 * 60)) / 1000);
+}
 
+updateCountdown();
+setInterval(updateCountdown, 1000);
+</script>
 
 </body>
 </html>
