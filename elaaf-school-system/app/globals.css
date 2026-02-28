@@ -75,7 +75,26 @@ img { max-width: 100%; height: auto; }
   color: var(--gray-600);
   max-width: 600px;
 }
+/* Footer always dark - never affected by dark mode */
+footer {
+  background: #0d1b3e !important;
+  color: white !important;
+}
 
+footer p,
+footer a,
+footer span,
+footer div {
+  color: white !important;
+}
+
+footer a {
+  opacity: 0.7;
+}
+
+footer a:hover {
+  opacity: 1;
+}
 .btn {
   display: inline-flex;
   align-items: center;

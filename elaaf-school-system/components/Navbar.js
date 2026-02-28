@@ -3,6 +3,23 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { navLinks } from '@/lib/data';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faSearch, faMoon, faSun, faBars, faTimes, faGraduationCap,
+  faHome, faInfoCircle, faBook, faClipboardList, faCalendarAlt,
+  faImages, faPhone, faTimes as faClose,
+} from '@fortawesome/free-solid-svg-icons';
+
+// Map nav labels to icons
+const navIcons = {
+  'Home': faHome,
+  'About': faInfoCircle,
+  'Academics': faBook,
+  'Admissions': faClipboardList,
+  'Events': faCalendarAlt,
+  'Gallery': faImages,
+  'Contact': faPhone,
+};
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -13,10 +30,13 @@ export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
 
-  // Dark mode toggle
+  // Dark mode init
   useEffect(() => {
     const saved = localStorage.getItem('theme');
-    if (saved === 'dark') { setDark(true); document.documentElement.setAttribute('data-theme', 'dark'); }
+    if (saved === 'dark') {
+      setDark(true);
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
   }, []);
 
   const toggleDark = () => {
@@ -46,121 +66,179 @@ export default function Navbar() {
     <>
       <nav style={{
         position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000,
-        background: scrolled ? 'var(--white)' : 'rgba(255,255,255,0.95)',
+        background: dark ? '#1e293b' : 'rgba(255,255,255,0.97)',
         backdropFilter: 'blur(12px)',
-        boxShadow: scrolled ? 'var(--shadow-md)' : 'none',
+        boxShadow: scrolled ? '0 4px 20px rgba(0,0,0,0.12)' : 'none',
+        borderBottom: scrolled ? `1px solid ${dark ? 'rgba(255,255,255,0.08)' : '#e2e8f0'}` : 'none',
         transition: 'all 0.3s ease',
-        borderBottom: scrolled ? '1px solid var(--gray-200)' : 'none',
       }}>
         <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 70 }}>
+
           {/* Logo */}
           <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             <div style={{
               width: 44, height: 44, borderRadius: '50%', background: 'white',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              border: '2px solid var(--gray-200)', overflow: 'hidden',
+              border: `2px solid ${dark ? 'rgba(255,255,255,0.15)' : '#e2e8f0'}`,
+              overflow: 'hidden',
             }}>
-              <img src="/logo-elaaf.png" alt="ESS Logo" style={{ width: '85%' }} onError={e => { e.target.style.display='none'; e.target.parentNode.innerHTML='<span style="font-weight:900;color:#C2151D;font-size:14px">ESS</span>'; }} />
+              <img src="/logo-elaaf.png" alt="ESS Logo" style={{ width: '85%' }} />
             </div>
             <div>
-              <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '1rem', color: 'var(--navy)', lineHeight: 1.1 }}>Elaaf School</div>
+              <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '1rem', color: dark ? 'white' : '#0d1b3e', lineHeight: 1.1 }}>Elaaf School</div>
               <div style={{ fontSize: '0.65rem', color: 'var(--crimson)', fontWeight: 600, letterSpacing: '0.05em' }}>SYSTEM</div>
             </div>
           </Link>
 
           {/* Desktop Nav */}
-          <div className="hide-mobile" style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-            {navLinks.map(link => (
-              <Link key={link.href} href={link.href} style={{
-                padding: '8px 14px', borderRadius: 4, fontSize: '0.9rem', fontWeight: 500,
-                color: pathname === link.href ? 'var(--crimson)' : 'var(--gray-800)',
-                background: pathname === link.href ? 'rgba(194,21,29,0.08)' : 'transparent',
-                transition: 'all 0.2s',
-              }}
-              onMouseEnter={e => { if (pathname !== link.href) e.target.style.background = 'var(--gray-100)'; }}
-              onMouseLeave={e => { if (pathname !== link.href) e.target.style.background = 'transparent'; }}
-              >{link.label}</Link>
-            ))}
+          <div className="nav-desktop" style={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            {navLinks.map(link => {
+              const isActive = pathname === link.href;
+              return (
+                <Link key={link.href} href={link.href} style={{
+                  padding: '8px 12px', borderRadius: 8, fontSize: '0.88rem', fontWeight: 500,
+                  display: 'flex', alignItems: 'center', gap: 6,
+                  color: isActive ? 'var(--crimson)' : dark ? 'rgba(255,255,255,0.85)' : '#1e293b',
+                  background: isActive ? 'rgba(194,21,29,0.1)' : 'transparent',
+                  transition: 'all 0.2s',
+                  textDecoration: 'none',
+                }}>
+                  <FontAwesomeIcon icon={navIcons[link.label] || faHome} style={{ width: 13, height: 13 }} />
+                  {link.label}
+                </Link>
+              );
+            })}
           </div>
 
-          {/* Actions */}
+          {/* Action buttons */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-            {/* Search button */}
+
+            {/* Search */}
             <button onClick={() => setSearchOpen(!searchOpen)} style={{
-              width: 38, height: 38, borderRadius: 4, border: '2px solid var(--gray-200)',
-              background: 'transparent', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
-              color: 'var(--gray-600)', fontSize: '1.1rem',
-            }}>🔍</button>
+              width: 38, height: 38, borderRadius: 8,
+              border: `2px solid ${dark ? 'rgba(255,255,255,0.15)' : '#e2e8f0'}`,
+              background: 'transparent', cursor: 'pointer',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              color: dark ? 'rgba(255,255,255,0.7)' : '#64748b',
+              transition: 'all 0.2s',
+            }}>
+              <FontAwesomeIcon icon={searchOpen ? faClose : faSearch} style={{ width: 14, height: 14 }} />
+            </button>
 
-            {/* Dark mode */}
+            {/* Dark mode toggle */}
             <button onClick={toggleDark} style={{
-              width: 38, height: 38, borderRadius: 4, border: '2px solid var(--gray-200)',
-              background: 'transparent', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: '1.1rem',
-            }}>{dark ? '☀️' : '🌙'}</button>
+              width: 38, height: 38, borderRadius: 8,
+              border: `2px solid ${dark ? 'rgba(255,255,255,0.15)' : '#e2e8f0'}`,
+              background: dark ? 'rgba(255,255,255,0.08)' : 'transparent',
+              cursor: 'pointer',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              color: dark ? '#f59e0b' : '#64748b',
+              transition: 'all 0.2s',
+            }}>
+              <FontAwesomeIcon icon={dark ? faSun : faMoon} style={{ width: 14, height: 14 }} />
+            </button>
 
-            {/* Apply button */}
-            <Link href="/admissions" className="hide-mobile" style={{
-              padding: '9px 18px', borderRadius: 4, background: 'var(--crimson)', color: 'white',
-              fontSize: '0.85rem', fontWeight: 600, transition: 'all 0.2s',
-            }}>Apply Now</Link>
+            {/* Apply Now */}
+            <Link href="/admissions" className="nav-apply" style={{
+              padding: '9px 18px', borderRadius: 8,
+              background: 'var(--crimson)', color: 'white',
+              fontSize: '0.85rem', fontWeight: 600,
+              display: 'flex', alignItems: 'center', gap: 6,
+              transition: 'all 0.2s', textDecoration: 'none',
+            }}>
+              <FontAwesomeIcon icon={faGraduationCap} style={{ width: 13, height: 13 }} />
+              Apply Now
+            </Link>
 
             {/* Mobile hamburger */}
-            <button onClick={() => setMenuOpen(!menuOpen)} style={{
-              display: 'none', width: 38, height: 38, borderRadius: 4,
-              border: '2px solid var(--gray-200)', background: 'transparent', cursor: 'pointer',
-              flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 5,
-            }}
-            className="mobile-menu-btn">
-              <span style={{ width: 18, height: 2, background: 'var(--navy)', borderRadius: 2, transition: 'all 0.3s', transform: menuOpen ? 'rotate(45deg) translate(5px, 5px)' : 'none' }} />
-              <span style={{ width: 18, height: 2, background: 'var(--navy)', borderRadius: 2, opacity: menuOpen ? 0 : 1, transition: 'all 0.3s' }} />
-              <span style={{ width: 18, height: 2, background: 'var(--navy)', borderRadius: 2, transition: 'all 0.3s', transform: menuOpen ? 'rotate(-45deg) translate(5px, -5px)' : 'none' }} />
+            <button onClick={() => setMenuOpen(!menuOpen)} className="nav-hamburger" style={{
+              width: 38, height: 38, borderRadius: 8,
+              border: `2px solid ${dark ? 'rgba(255,255,255,0.15)' : '#e2e8f0'}`,
+              background: 'transparent', cursor: 'pointer',
+              display: 'none', alignItems: 'center', justifyContent: 'center',
+              color: dark ? 'white' : '#0d1b3e',
+            }}>
+              <FontAwesomeIcon icon={menuOpen ? faTimes : faBars} style={{ width: 16, height: 16 }} />
             </button>
           </div>
         </div>
 
-        {/* Search bar dropdown */}
+        {/* Search dropdown */}
         {searchOpen && (
-          <div style={{ borderTop: '1px solid var(--gray-200)', padding: '16px 24px' }}>
+          <div style={{
+            borderTop: `1px solid ${dark ? 'rgba(255,255,255,0.08)' : '#e2e8f0'}`,
+            padding: '16px 24px',
+            background: dark ? '#1e293b' : 'white',
+          }}>
             <form onSubmit={handleSearch} style={{ maxWidth: 600, margin: '0 auto', display: 'flex', gap: 10 }}>
               <input
                 autoFocus
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
                 placeholder="Search pages, events, programs..."
-                className="form-control"
-                style={{ flex: 1 }}
+                style={{
+                  flex: 1, padding: '11px 16px',
+                  border: `2px solid ${dark ? 'rgba(255,255,255,0.15)' : '#e2e8f0'}`,
+                  borderRadius: 8, fontSize: '0.95rem', outline: 'none',
+                  background: dark ? 'rgba(255,255,255,0.05)' : 'white',
+                  color: dark ? 'white' : '#0d1b3e',
+                  fontFamily: 'var(--font-body)',
+                }}
               />
-              <button type="submit" className="btn btn-primary">Search</button>
+              <button type="submit" style={{
+                padding: '11px 20px', borderRadius: 8,
+                background: 'var(--crimson)', color: 'white',
+                border: 'none', cursor: 'pointer', fontWeight: 600,
+                display: 'flex', alignItems: 'center', gap: 8,
+                fontFamily: 'var(--font-body)',
+              }}>
+                <FontAwesomeIcon icon={faSearch} style={{ width: 13, height: 13 }} />
+                Search
+              </button>
             </form>
           </div>
         )}
 
         {/* Mobile menu */}
         {menuOpen && (
-          <div style={{ borderTop: '1px solid var(--gray-200)', padding: '12px 24px 20px', background: 'var(--white)' }}>
+          <div style={{
+            borderTop: `1px solid ${dark ? 'rgba(255,255,255,0.08)' : '#e2e8f0'}`,
+            padding: '12px 24px 20px',
+            background: dark ? '#1e293b' : 'white',
+          }}>
             {navLinks.map(link => (
               <Link key={link.href} href={link.href} onClick={() => setMenuOpen(false)} style={{
-                display: 'block', padding: '12px 0', fontSize: '1rem', fontWeight: 500,
-                color: pathname === link.href ? 'var(--crimson)' : 'var(--gray-800)',
-                borderBottom: '1px solid var(--gray-100)',
-              }}>{link.label}</Link>
+                display: 'flex', alignItems: 'center', gap: 12,
+                padding: '13px 0', fontSize: '1rem', fontWeight: 500,
+                color: pathname === link.href ? 'var(--crimson)' : dark ? 'rgba(255,255,255,0.85)' : '#1e293b',
+                borderBottom: `1px solid ${dark ? 'rgba(255,255,255,0.06)' : '#f1f5f9'}`,
+                textDecoration: 'none',
+              }}>
+                <FontAwesomeIcon icon={navIcons[link.label] || faHome} style={{ width: 15, height: 15, color: 'var(--crimson)' }} />
+                {link.label}
+              </Link>
             ))}
             <Link href="/admissions" onClick={() => setMenuOpen(false)} style={{
-              display: 'block', marginTop: 16, padding: '12px', textAlign: 'center',
-              background: 'var(--crimson)', color: 'white', borderRadius: 4, fontWeight: 600,
-            }}>Apply Now</Link>
+              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+              marginTop: 16, padding: '13px',
+              background: 'var(--crimson)', color: 'white',
+              borderRadius: 8, fontWeight: 600, textDecoration: 'none',
+            }}>
+              <FontAwesomeIcon icon={faGraduationCap} style={{ width: 14, height: 14 }} />
+              Apply Now
+            </Link>
           </div>
         )}
       </nav>
 
-      {/* Spacer for fixed navbar */}
+      {/* Spacer */}
       <div style={{ height: 70 }} />
 
       <style>{`
         @media (max-width: 768px) {
-          .hide-mobile { display: none !important; }
-          .mobile-menu-btn { display: flex !important; }
+          .nav-desktop { display: none !important; }
+          .nav-apply { display: none !important; }
+          .nav-hamburger { display: flex !important; }
         }
       `}</style>
     </>
