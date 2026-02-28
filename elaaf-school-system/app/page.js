@@ -125,7 +125,7 @@ export default function HomePage() {
   const catColors = { Sports: '#16a34a', Academic: '#2563eb', Admissions: '#C2151D', Islamic: '#7c3aed', Cultural: '#d97706' };
 
   return (
-    <>
+    <div style={{overflow: 'hidden'}}>
       {/* ══ HERO ══ */}
       <section style={{
         minHeight: '93vh', display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -230,7 +230,7 @@ export default function HomePage() {
         </div>
 
         {/* Scroll indicator */}
-        <div style={{ position: 'absolute', bottom: 30, left: '50%', transform: 'translateX(-50%)', animation: 'bounce 2s ease-in-out infinite', opacity: 0.6 }}>
+        <div style={{ position: 'absolute', bottom: 30, left: '50%', transform: 'translateX(-50%)', animation: 'bounce 2s ease-in-out infinite', opacity: 0.6  }}>
           <div style={{ width: 24, height: 38, borderRadius: 12, border: '2px solid rgba(255,255,255,0.4)', display: 'flex', alignItems: 'flex-start', justifyContent: 'center', padding: '6px 0' }}>
             <div style={{ width: 4, height: 8, borderRadius: 2, background: 'white', animation: 'scrollDot 2s ease-in-out infinite' }} />
           </div>
@@ -398,7 +398,7 @@ export default function HomePage() {
       </section>
 
       {/* ══ EVENTS ══ */}
-      <section className="section">
+      <section className="section" >
         <div className="container">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 44, flexWrap: 'wrap', gap: 16 }}>
             <Reveal direction="left">
@@ -602,6 +602,6 @@ export default function HomePage() {
         @keyframes pulse { 0%,100%{box-shadow:0 8px 32px rgba(0,0,0,0.2)} 50%{box-shadow:0 8px 32px rgba(194,21,29,0.3)} }
         @keyframes fadeInUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:none} }
       `}</style>
-    </>
+    </div>
   );
 }
