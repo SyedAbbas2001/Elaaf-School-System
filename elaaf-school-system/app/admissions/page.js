@@ -1,11 +1,12 @@
 'use client';
 import { useState, useEffect, useRef } from 'react';
+import emailjs from "@emailjs/browser";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faFileAlt, faPencilAlt, faComments, faGraduationCap,
   faCheckCircle, faIdCard, faBaby, faSchool, faMobileAlt,
   faEnvelope, faMoneyBillWave, faQuestionCircle, faChevronDown,
-  faPaperPlane, faArrowRight, faUsers,
+  faPaperPlane, faUsers, faSpinner,
 } from '@fortawesome/free-solid-svg-icons';
 import { faqs } from '@/lib/data';
 
@@ -31,7 +32,6 @@ const fees = [
   ['Secondary (Grade 9–10)', 'PKR 6,500/month'],
 ];
 
-/* ── Scroll reveal ── */
 function Reveal({ children, delay = 0, direction = 'up' }) {
   const ref = useRef(null);
   const [visible, setVisible] = useState(false);
@@ -55,11 +55,35 @@ function Reveal({ children, delay = 0, direction = 'up' }) {
 export default function AdmissionsPage() {
   const [form, setForm] = useState({ name: '', grade: '', phone: '', email: '', message: '' });
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
   const [openFaq, setOpenFaq] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setSubmitted(true);
+    setLoading(true);
+    setError('');
+
+    emailjs.send(
+      process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
+      process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
+      {
+        form_type: 'Admission Application',
+        from_name: form.name,
+        from_email: form.email,
+        phone: form.phone,
+        subject_or_grade: form.grade,
+        message: form.message || 'No additional message',
+      },
+      process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY
+    ).then(() => {
+      setSubmitted(true);
+      setForm({ name: '', grade: '', phone: '', email: '', message: '' });
+      setLoading(false);
+    }, () => {
+      setError('Something went wrong. Please call us directly.');
+      setLoading(false);
+    });
   };
 
   return (
@@ -74,14 +98,13 @@ export default function AdmissionsPage() {
         {[{ t: '15%', l: '5%', s: 300, c: 'rgba(255,255,255,0.04)' }, { t: '55%', r: '5%', s: 350, c: 'rgba(194,21,29,0.1)' }].map((b, i) => (
           <div key={i} style={{ position: 'absolute', top: b.t, left: b.l, right: b.r, width: b.s, height: b.s, borderRadius: '50%', background: b.c, filter: 'blur(60px)', animation: `blob${i} ${7 + i * 2}s ease-in-out infinite` }} />
         ))}
-        <div className="container" style={{ position: 'relative', zIndex: 1 , animation: 'heroFadeIn 0.8s ease' }}>
+        <div className="container" style={{ position: 'relative', zIndex: 1, animation: 'heroFadeIn 0.8s ease' }}>
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '6px 18px', borderRadius: 20, background: 'rgba(212,168,67,0.2)', border: '1px solid rgba(212,168,67,0.4)', fontSize: '0.82rem', fontWeight: 700, marginBottom: 20, color: '#d4a843', letterSpacing: '0.06em' }}>
             <FontAwesomeIcon icon={faGraduationCap} style={{ width: 12 }} />
             2026–27 Academic Year
           </div>
           <h1 style={{ fontSize: 'clamp(2.5rem,5vw,4rem)', fontFamily: 'var(--font-display)', marginBottom: 16, lineHeight: 1.1 }}>Admissions Open</h1>
           <p style={{ fontSize: '1.1rem', opacity: 0.85, maxWidth: 560, margin: '0 auto 32px' }}>Begin your child's journey to excellence. Seats are limited — apply early to secure enrollment.</p>
-          {/* Quick stats */}
           <div style={{ display: 'flex', gap: 24, justifyContent: 'center', flexWrap: 'wrap' }}>
             {[['🏫', 'Nursery to Grade 10'], ['👥', 'Limited Seats'], ['📅', 'Apply Before March 26']].map(([icon, label]) => (
               <div key={label} style={{ display: 'flex', alignItems: 'center', gap: 8, background: 'rgba(255,255,255,0.1)', backdropFilter: 'blur(10px)', padding: '8px 16px', borderRadius: 20, fontSize: '0.88rem', border: '1px solid rgba(255,255,255,0.15)' }}>
@@ -103,44 +126,24 @@ export default function AdmissionsPage() {
             </div>
           </Reveal>
 
-         <div className="grid-4" style={{ position: 'relative' }}>
-  {/* Connecting line — properly centered on the big icons */}
-  <div style={{
-    position: 'absolute',
-    top: 35, // half of icon height (70px / 2)
-    left: '12%', right: '12%',
-    height: 2,
-    background: 'linear-gradient(90deg, #2563eb, #C2151D, #7c3aed, #16a34a)',
-    borderRadius: 2, zIndex: 0, opacity: 0.3,
-  }} className="hide-mobile" />
-
-  {steps.map((s, i) => (
-    <Reveal key={s.num} delay={i * 0.12}>
-      <div style={{ textAlign: 'center', padding: 24, position: 'relative', zIndex: 1 }}>
-        {/* Big icon circle */}
-        <div style={{
-          width: 70, height: 70, borderRadius: '50%', background: s.color,
-          color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center',
-          margin: '0 auto 8px', boxShadow: `0 8px 25px ${s.color}40`,
-          transition: 'transform 0.3s',
-        }}
-        onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.1)'}
-        onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
-        >
-          <FontAwesomeIcon icon={s.icon} style={{ width: 26, height: 26 }} />
-        </div>
-        {/* Number badge directly below icon */}
-        <div style={{
-          width: 24, height: 24, borderRadius: '50%', background: s.color,
-          color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center',
-          margin: '0 auto 14px', fontSize: '0.75rem', fontWeight: 900,
-        }}>{s.num}</div>
-        <h4 style={{ fontFamily: 'var(--font-display)', marginBottom: 10, fontSize: '1.1rem' }}>{s.title}</h4>
-        <p style={{ color: 'var(--gray-600)', fontSize: '0.92rem', lineHeight: 1.65 }}>{s.desc}</p>
-      </div>
-    </Reveal>
-  ))}
-</div>
+          <div className="grid-4" style={{ position: 'relative' }}>
+            <div style={{ position: 'absolute', top: 35, left: '12%', right: '12%', height: 2, background: 'linear-gradient(90deg, #2563eb, #C2151D, #7c3aed, #16a34a)', borderRadius: 2, zIndex: 0, opacity: 0.3 }} className="hide-mobile" />
+            {steps.map((s, i) => (
+              <Reveal key={s.num} delay={i * 0.12}>
+                <div style={{ textAlign: 'center', padding: 24, position: 'relative', zIndex: 1 }}>
+                  <div style={{ width: 70, height: 70, borderRadius: '50%', background: s.color, color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 8px', boxShadow: `0 8px 25px ${s.color}40`, transition: 'transform 0.3s' }}
+                  onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.1)'}
+                  onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+                  >
+                    <FontAwesomeIcon icon={s.icon} style={{ width: 26, height: 26 }} />
+                  </div>
+                  <div style={{ width: 24, height: 24, borderRadius: '50%', background: s.color, color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 14px', fontSize: '0.75rem', fontWeight: 900 }}>{s.num}</div>
+                  <h4 style={{ fontFamily: 'var(--font-display)', marginBottom: 10, fontSize: '1.1rem' }}>{s.title}</h4>
+                  <p style={{ color: 'var(--gray-600)', fontSize: '0.92rem', lineHeight: 1.65 }}>{s.desc}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -160,58 +163,117 @@ export default function AdmissionsPage() {
                 </div>
                 <p style={{ color: 'var(--gray-600)', marginBottom: 28, fontSize: '0.95rem' }}>Fill out the form and our admissions team will contact you within 24 hours.</p>
 
-                {submitted ? (
-                  <div style={{ textAlign: 'center', padding: '40px 0', animation: 'fadeInUp 0.5s ease' }}>
-                    <div style={{ width: 72, height: 72, borderRadius: '50%', background: 'rgba(22,163,74,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
-                      <FontAwesomeIcon icon={faCheckCircle} style={{ width: 36, height: 36, color: '#16a34a' }} />
-                    </div>
-                    <h4 style={{ fontFamily: 'var(--font-display)', marginBottom: 12, fontSize: '1.4rem' }}>Application Received!</h4>
-                    <p style={{ color: 'var(--gray-600)' }}>Our admissions team will contact you within 24 hours. JazakAllah Khair!</p>
-                  </div>
-                ) : (
+               {submitted ? (
+            <div style={{ textAlign: 'center', padding: '40px 0', animation: 'fadeInUp 0.5s ease' }}>
+            <div style={{ width: 72, height: 72, borderRadius: '50%', background: 'rgba(22,163,74,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
+              <FontAwesomeIcon icon={faCheckCircle} style={{ width: 36, height: 36, color: '#16a34a' }} />
+            </div>
+            <h4 style={{ fontFamily: 'var(--font-display)', marginBottom: 12, fontSize: '1.4rem' }}>Application Received!</h4>
+            <p style={{ color: 'var(--gray-600)', marginBottom: 24 }}>Our admissions team will contact you within 24 hours. JazakAllah Khair!</p>
+
+            {/* ── Add this button ── */}
+            <button onClick={() => setSubmitted(false)} style={{
+              display: 'inline-flex', alignItems: 'center', gap: 8,
+              padding: '10px 24px', borderRadius: 8,
+              border: '2px solid var(--gray-200)', background: 'transparent',
+              cursor: 'pointer', fontFamily: 'var(--font-body)',
+              fontWeight: 600, color: 'var(--navy)', transition: 'all 0.2s',
+            }}
+            onMouseEnter={e => { e.currentTarget.style.background = 'var(--navy)'; e.currentTarget.style.color = 'white'; e.currentTarget.style.borderColor = 'var(--navy)'; }}
+            onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--navy)'; e.currentTarget.style.borderColor = 'var(--gray-200)'; }}
+            >
+              <FontAwesomeIcon icon={faPaperPlane} style={{ width: 13 }} />
+              Submit Another Application
+            </button>
+
+          </div>
+        ) : (
                   <form onSubmit={handleSubmit}>
+
+                    {/* Student Name */}
                     <div className="form-group">
                       <label>Student Full Name *</label>
-                      <input className="form-control" required value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} placeholder="e.g. Ahmed Ali Khan" />
+                      <input
+                        className="form-control" required
+                        value={form.name} onChange={e => setForm({ ...form, name: e.target.value })}
+                        placeholder="e.g. Ahmed Ali Khan"
+                      />
                     </div>
+
+                    {/* Grade */}
                     <div className="form-group">
                       <label>Applying for Grade *</label>
-                      <select className="form-control" required value={form.grade} onChange={e => setForm({ ...form, grade: e.target.value })}>
+                      <select
+                        className="form-control" required
+                        value={form.grade} onChange={e => setForm({ ...form, grade: e.target.value })}
+                      >
                         <option value="">Select Grade</option>
-                        {['Nursery', 'KG', 'Grade 1', 'Grade 2', 'Grade 3', 'Grade 4', 'Grade 5', 'Grade 6', 'Grade 7', 'Grade 8', 'Grade 9', 'Grade 10'].map(g => <option key={g}>{g}</option>)}
+                        {['Nursery', 'KG', 'Grade 1', 'Grade 2', 'Grade 3', 'Grade 4', 'Grade 5', 'Grade 6', 'Grade 7', 'Grade 8', 'Grade 9', 'Grade 10'].map(g => (
+                          <option key={g} value={g}>{g}</option>
+                        ))}
                       </select>
                     </div>
+
+                    {/* Phone */}
                     <div className="form-group">
                       <label>Parent Phone Number *</label>
                       <div style={{ position: 'relative' }}>
-                        <FontAwesomeIcon icon={faMobileAlt} style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', width: 14, color: 'var(--gray-400)' }} />
-                        <input className="form-control" type="tel" required value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })} placeholder="+92 300 XXXXXXX" style={{ paddingLeft: 40 }} />
+                        <FontAwesomeIcon icon={faMobileAlt} style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', width: 14, color: 'var(--gray-400)', pointerEvents: 'none' }} />
+                        <input
+                          className="form-control" type="tel" required
+                          value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })}
+                          placeholder="+92 300 XXXXXXX" style={{ paddingLeft: 40 }}
+                        />
                       </div>
                     </div>
+
+                    {/* Email */}
                     <div className="form-group">
                       <label>Email Address</label>
                       <div style={{ position: 'relative' }}>
-                        <FontAwesomeIcon icon={faEnvelope} style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', width: 14, color: 'var(--gray-400)' }} />
-                        <input className="form-control" type="email" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} placeholder="parent@email.com" style={{ paddingLeft: 40 }} />
+                        <FontAwesomeIcon icon={faEnvelope} style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', width: 14, color: 'var(--gray-400)', pointerEvents: 'none' }} />
+                        <input
+                          className="form-control" type="email"
+                          value={form.email} onChange={e => setForm({ ...form, email: e.target.value })}
+                          placeholder="parent@email.com" style={{ paddingLeft: 40 }}
+                        />
                       </div>
                     </div>
+
+                    {/* Message */}
                     <div className="form-group">
                       <label>Additional Message</label>
-                      <textarea className="form-control" rows={3} value={form.message} onChange={e => setForm({ ...form, message: e.target.value })} placeholder="Any specific questions or requirements..." />
+                      <textarea
+                        className="form-control" rows={3}
+                        value={form.message} onChange={e => setForm({ ...form, message: e.target.value })}
+                        placeholder="Any specific questions or requirements..."
+                      />
                     </div>
-                    <button type="submit" style={{
+
+                    {/* Error */}
+                    {error && (
+                      <div style={{ color: 'var(--crimson)', fontSize: '0.88rem', marginBottom: 16, padding: '10px 14px', background: 'rgba(194,21,29,0.07)', borderRadius: 8 }}>
+                        ⚠️ {error}
+                      </div>
+                    )}
+
+                    {/* Submit */}
+                    <button type="submit" disabled={loading} style={{
                       width: '100%', padding: '14px', borderRadius: 8,
-                      background: 'var(--crimson)', color: 'white', border: 'none',
-                      cursor: 'pointer', fontFamily: 'var(--font-body)', fontWeight: 700,
-                      fontSize: '1rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
-                      transition: 'all 0.2s', boxShadow: '0 6px 20px rgba(194,21,29,0.35)',
+                      background: loading ? 'var(--gray-400)' : 'var(--crimson)',
+                      color: 'white', border: 'none',
+                      cursor: loading ? 'not-allowed' : 'pointer',
+                      fontFamily: 'var(--font-body)', fontWeight: 700, fontSize: '1rem',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+                      transition: 'all 0.2s', boxShadow: loading ? 'none' : '0 6px 20px rgba(194,21,29,0.35)',
                     }}
-                    onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 10px 30px rgba(194,21,29,0.45)'; }}
+                    onMouseEnter={e => { if (!loading) { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 10px 30px rgba(194,21,29,0.45)'; }}}
                     onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 6px 20px rgba(194,21,29,0.35)'; }}
                     >
-                      <FontAwesomeIcon icon={faPaperPlane} style={{ width: 14 }} />
-                      Submit Application
+                      <FontAwesomeIcon icon={loading ? faSpinner : faPaperPlane} style={{ width: 14 }} spin={loading} />
+                      {loading ? 'Sending...' : 'Submit Application'}
                     </button>
+
                   </form>
                 )}
               </div>
