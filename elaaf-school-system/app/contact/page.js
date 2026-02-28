@@ -1,5 +1,6 @@
 'use client';
 import { useState, useEffect, useRef } from 'react';
+import emailjs from "@emailjs/browser";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faMapMarkerAlt, faPhone, faEnvelope, faGlobe, faClock,
@@ -33,9 +34,51 @@ const contactInfo = [
 ];
 
 export default function ContactPage() {
-  const [form, setForm] = useState({ name: '', email: '', phone: '', subject: '', message: '' });
+   const [form, setForm] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    subject: "",
+    message: "",
+  });
+  const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
-  const handleSubmit = (e) => { e.preventDefault(); setSent(true); };
+ const handleSubmit = (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    emailjs
+      .send(
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
+        {
+          from_name: form.name,
+          from_email: form.email,
+          phone: form.phone,
+          subject_or_grade: form.subject,
+          message: form.message,
+        },
+        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY
+      )
+      .then(
+        (result) => {
+          console.log("Email sent:", result.text);
+          setSent(true);
+          setForm({
+            name: "",
+            email: "",
+            phone: "",
+            subject: "",
+            message: "",
+          });
+          setLoading(false);
+        },
+        (error) => {
+          console.log("Error sending email:", error.text);
+          setLoading(false);
+        }
+      );
+  };
 
   return (
     <>
@@ -96,8 +139,9 @@ export default function ContactPage() {
                   <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '1.5rem' }}>Send a Message</h3>
                 </div>
 
-                {sent ? (
-                  <div style={{ textAlign: 'center', padding: '40px 0', animation: 'fadeInUp 0.5s ease' }}>
+              
+                 {sent ? (
+         <div style={{ textAlign: 'center', padding: '40px 0', animation: 'fadeInUp 0.5s ease' }}>
                     <div style={{ width: 72, height: 72, borderRadius: '50%', background: 'rgba(22,163,74,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
                       <FontAwesomeIcon icon={faCheckCircle} style={{ width: 36, height: 36, color: '#16a34a' }} />
                     </div>
@@ -105,60 +149,98 @@ export default function ContactPage() {
                     <p style={{ color: 'var(--gray-600)', marginBottom: 24 }}>JazakAllah Khair for reaching out. We'll reply within 24 hours.</p>
                     <button onClick={() => setSent(false)} style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '10px 24px', borderRadius: 8, border: '2px solid var(--gray-200)', background: 'transparent', cursor: 'pointer', fontFamily: 'var(--font-body)', fontWeight: 600, color: 'var(--navy)' }}>Send Another</button>
                   </div>
-                ) : (
-                  <form onSubmit={handleSubmit}>
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
-                      <div className="form-group">
-                        <label>Full Name *</label>
-                        <div style={{ position: 'relative' }}>
-                          <FontAwesomeIcon icon={faUser} style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', width: 13, color: 'var(--gray-400)' }} />
-                          <input className="form-control" required value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} placeholder="Your name" style={{ paddingLeft: 38 }} />
-                        </div>
-                      </div>
-                      <div className="form-group">
-                        <label>Phone Number</label>
-                        <div style={{ position: 'relative' }}>
-                          <FontAwesomeIcon icon={faMobileAlt} style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', width: 13, color: 'var(--gray-400)' }} />
-                          <input className="form-control" type="tel" value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })} placeholder="+92 300 XXXXXXX" style={{ paddingLeft: 38 }} />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="form-group">
-                      <label>Email Address *</label>
-                      <div style={{ position: 'relative' }}>
-                        <FontAwesomeIcon icon={faEnvelope} style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', width: 13, color: 'var(--gray-400)' }} />
-                        <input className="form-control" type="email" required value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} placeholder="your@email.com" style={{ paddingLeft: 38 }} />
-                      </div>
-                    </div>
-                    <div className="form-group">
-                      <label>Subject *</label>
-                      <div style={{ position: 'relative' }}>
-                        <FontAwesomeIcon icon={faTag} style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', width: 13, color: 'var(--gray-400)' }} />
-                        <select className="form-control" required value={form.subject} onChange={e => setForm({ ...form, subject: e.target.value })} style={{ paddingLeft: 38 }}>
-                          <option value="">Select a subject</option>
-                          {['Admission Inquiry', 'Fee Information', 'Campus Visit', 'General Query', 'Complaint / Feedback', 'Other'].map(s => <option key={s}>{s}</option>)}
-                        </select>
-                      </div>
-                    </div>
-                    <div className="form-group">
-                      <label>Message *</label>
-                      <textarea className="form-control" rows={5} required value={form.message} onChange={e => setForm({ ...form, message: e.target.value })} placeholder="Write your message here..." />
-                    </div>
-                    <button type="submit" style={{
+      ) : (
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label>Full Name *</label>
+            <input
+              name="from_name"
+              required
+              className="form-control"
+              value={form.name}
+              onChange={(e) => setForm({ ...form, name: e.target.value })}
+            />
+          </div>
+<div style={{ display: "flex", gap: "16px", flexWrap: "wrap" , marginBottom: 18}}>
+  <div style={{ flex: 1, minWidth: "200px" }}>
+    <label>Email *</label>
+    <input
+      name="from_email"
+      type="email"
+      required
+      className="form-control"
+      value={form.email}
+      onChange={(e) => setForm({ ...form, email: e.target.value })}
+    />
+  </div>
+
+  <div style={{ flex: 1, minWidth: "200px" }}>
+    <label>Phone</label>
+    <input
+      name="phone"
+      className="form-control"
+      value={form.phone}
+      onChange={(e) => setForm({ ...form, phone: e.target.value })}
+    />
+  </div>
+</div>
+          
+
+          <div className="form-group">
+            <label>Subject *</label>
+            <select
+              name="subject_or_grade"
+              required
+              className="form-control"
+              value={form.subject}
+              onChange={(e) => setForm({ ...form, subject: e.target.value })}
+            >
+              <option value="">Select a subject</option>
+              <option>Admission Inquiry</option>
+              <option>Fee Information</option>
+              <option>Campus Visit</option>
+              <option>General Query</option>
+              <option>Complaint / Feedback</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <div className="form-group">
+            <label>Message *</label>
+            <textarea
+              name="message"
+              required
+              rows={5}
+              className="form-control"
+              value={form.message}
+              onChange={(e) => setForm({ ...form, message: e.target.value })}
+            />
+          </div>
+
+          <button
+            type="submit"
+            disabled={loading}
+            style={{
                       width: '100%', padding: '14px', borderRadius: 8,
                       background: 'var(--crimson)', color: 'white', border: 'none',
                       cursor: 'pointer', fontFamily: 'var(--font-body)', fontWeight: 700,
                       fontSize: '1rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
-                      transition: 'all 0.2s', boxShadow: '0 6px 20px rgba(194,21,29,0.3)',
-                    }}
-                    onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 10px 30px rgba(194,21,29,0.4)'; }}
-                    onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 6px 20px rgba(194,21,29,0.3)'; }}
-                    >
-                      <FontAwesomeIcon icon={faPaperPlane} style={{ width: 14 }} />
-                      Send Message
-                    </button>
-                  </form>
-                )}
+                      transition: 'all 0.2s', boxShadow: '0 6px 20px rgba(194,21,29,0.35)',}}
+
+          onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 10px 30px rgba(194,21,29,0.45)'; }}
+                    onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 6px 20px rgba(194,21,29,0.35)'; }}
+          >
+            {loading ? "Sending..." : "Send Message"}
+            {!loading && (
+              <FontAwesomeIcon
+                icon={faPaperPlane}
+                style={{ marginLeft: 8 }}
+              />
+            )}
+          </button>
+        </form>
+      )}
+    
               </div>
             </Reveal>
           </div>
