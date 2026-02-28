@@ -1,15 +1,56 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faFileAlt, faPencilAlt, faComments, faGraduationCap,
+  faCheckCircle, faIdCard, faBaby, faSchool, faMobileAlt,
+  faEnvelope, faMoneyBillWave, faQuestionCircle, faChevronDown,
+  faPaperPlane, faArrowRight, faUsers,
+} from '@fortawesome/free-solid-svg-icons';
 import { faqs } from '@/lib/data';
 
 const steps = [
-  { num: 1, title: 'Download Form', desc: 'Get the admission form from our office or download it online.' },
-  { num: 2, title: 'Entrance Test', desc: 'Student appears for a grade-appropriate entrance test at our campus.' },
-  { num: 3, title: 'Interview', desc: 'Brief interview with parents and student with our academic head.' },
-  { num: 4, title: 'Enrollment', desc: 'Submit documents, pay fees and receive your welcome kit!' },
+  { num: 1, icon: faFileAlt, title: 'Download Form', desc: 'Get the admission form from our office or download it online.', color: '#2563eb' },
+  { num: 2, icon: faPencilAlt, title: 'Entrance Test', desc: 'Student appears for a grade-appropriate entrance test at our campus.', color: '#C2151D' },
+  { num: 3, icon: faComments, title: 'Interview', desc: 'Brief interview with parents and student with our academic head.', color: '#7c3aed' },
+  { num: 4, icon: faGraduationCap, title: 'Enrollment', desc: 'Submit documents, pay fees and receive your welcome kit!', color: '#16a34a' },
 ];
 
-const docs = ['Recent Passport Photos (4)', 'Birth Certificate (Original + Copy)', 'Previous School Results/Report Card', 'Parent/Guardian CNIC Copy', 'Transfer Certificate (if applicable)'];
+const docs = [
+  { icon: faBaby, text: 'Recent Passport Photos (4)' },
+  { icon: faIdCard, text: 'Birth Certificate (Original + Copy)' },
+  { icon: faSchool, text: 'Previous School Results/Report Card' },
+  { icon: faIdCard, text: 'Parent/Guardian CNIC Copy' },
+  { icon: faFileAlt, text: 'Transfer Certificate (if applicable)' },
+];
+
+const fees = [
+  ['Early Years (Nursery–KG)', 'PKR 3,500/month'],
+  ['Primary (Grade 1–5)', 'PKR 4,500/month'],
+  ['Middle School (6–8)', 'PKR 5,500/month'],
+  ['Secondary (Grade 9–10)', 'PKR 6,500/month'],
+];
+
+/* ── Scroll reveal ── */
+function Reveal({ children, delay = 0, direction = 'up' }) {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const observer = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) { setVisible(true); observer.disconnect(); }
+    }, { threshold: 0.1 });
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+  const transforms = { up: 'translateY(40px)', left: 'translateX(-40px)', right: 'translateX(40px)' };
+  return (
+    <div ref={ref} style={{
+      opacity: visible ? 1 : 0,
+      transform: visible ? 'none' : transforms[direction],
+      transition: `opacity 0.7s ease ${delay}s, transform 0.7s ease ${delay}s`,
+    }}>{children}</div>
+  );
+}
 
 export default function AdmissionsPage() {
   const [form, setForm] = useState({ name: '', grade: '', phone: '', email: '', message: '' });
@@ -23,131 +64,255 @@ export default function AdmissionsPage() {
 
   return (
     <>
-      <div className="page-hero">
-        <div className="container" style={{ position: 'relative', zIndex: 1 }}>
-          <div className="badge" style={{ background: 'rgba(212,168,67,0.2)', color: '#d4a843', marginBottom: 16 }}>2026–27 Academic Year</div>
-          <h1>Admissions Open</h1>
-          <p>Begin your child's journey to excellence. Seats are limited — apply early to secure enrollment.</p>
+      {/* ── HERO ── */}
+      <div style={{
+        background: 'linear-gradient(135deg, #0d1b3e 0%, #1a3a6b 50%, #8b0a0f 100%)',
+        padding: '100px 0 70px', color: 'white', textAlign: 'center',
+        position: 'relative', overflow: 'hidden',
+      }}>
+        <div style={{ position: 'absolute', inset: 0, backgroundImage: 'linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)', backgroundSize: '60px 60px' }} />
+        {[{ t: '15%', l: '5%', s: 300, c: 'rgba(255,255,255,0.04)' }, { t: '55%', r: '5%', s: 350, c: 'rgba(194,21,29,0.1)' }].map((b, i) => (
+          <div key={i} style={{ position: 'absolute', top: b.t, left: b.l, right: b.r, width: b.s, height: b.s, borderRadius: '50%', background: b.c, filter: 'blur(60px)', animation: `blob${i} ${7 + i * 2}s ease-in-out infinite` }} />
+        ))}
+        <div className="container" style={{ position: 'relative', zIndex: 1 , animation: 'heroFadeIn 0.8s ease' }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '6px 18px', borderRadius: 20, background: 'rgba(212,168,67,0.2)', border: '1px solid rgba(212,168,67,0.4)', fontSize: '0.82rem', fontWeight: 700, marginBottom: 20, color: '#d4a843', letterSpacing: '0.06em' }}>
+            <FontAwesomeIcon icon={faGraduationCap} style={{ width: 12 }} />
+            2026–27 Academic Year
+          </div>
+          <h1 style={{ fontSize: 'clamp(2.5rem,5vw,4rem)', fontFamily: 'var(--font-display)', marginBottom: 16, lineHeight: 1.1 }}>Admissions Open</h1>
+          <p style={{ fontSize: '1.1rem', opacity: 0.85, maxWidth: 560, margin: '0 auto 32px' }}>Begin your child's journey to excellence. Seats are limited — apply early to secure enrollment.</p>
+          {/* Quick stats */}
+          <div style={{ display: 'flex', gap: 24, justifyContent: 'center', flexWrap: 'wrap' }}>
+            {[['🏫', 'Nursery to Grade 10'], ['👥', 'Limited Seats'], ['📅', 'Apply Before March 26']].map(([icon, label]) => (
+              <div key={label} style={{ display: 'flex', alignItems: 'center', gap: 8, background: 'rgba(255,255,255,0.1)', backdropFilter: 'blur(10px)', padding: '8px 16px', borderRadius: 20, fontSize: '0.88rem', border: '1px solid rgba(255,255,255,0.15)' }}>
+                <span>{icon}</span><span style={{ opacity: 0.9 }}>{label}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
-      {/* Admission Steps */}
+      {/* ── ADMISSION STEPS ── */}
       <section className="section">
         <div className="container">
-          <div style={{ textAlign: 'center', marginBottom: 48 }}>
-            <div className="badge" style={{ marginBottom: 16 }}>How to Apply</div>
-            <h2 className="section-title">Admission Process</h2>
-          </div>
-          <div className="grid-4">
-            {steps.map(s => (
-              <div key={s.num} style={{ textAlign: 'center', padding: 24 }}>
-                <div style={{ width: 64, height: 64, borderRadius: '50%', background: 'var(--crimson)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px', fontSize: '1.4rem', fontWeight: 900, fontFamily: 'var(--font-display)' }}>{s.num}</div>
-                <h4 style={{ fontFamily: 'var(--font-display)', marginBottom: 10, fontSize: '1.1rem' }}>{s.title}</h4>
-                <p style={{ color: 'var(--gray-600)', fontSize: '0.95rem', lineHeight: 1.6 }}>{s.desc}</p>
-              </div>
-            ))}
-          </div>
+          <Reveal>
+            <div style={{ textAlign: 'center', marginBottom: 52 }}>
+              <div className="badge" style={{ marginBottom: 16 }}>How to Apply</div>
+              <h2 className="section-title">Admission Process</h2>
+              <p className="section-subtitle" style={{ margin: '0 auto' }}>Four simple steps to join the Elaaf family.</p>
+            </div>
+          </Reveal>
+
+         <div className="grid-4" style={{ position: 'relative' }}>
+  {/* Connecting line — properly centered on the big icons */}
+  <div style={{
+    position: 'absolute',
+    top: 35, // half of icon height (70px / 2)
+    left: '12%', right: '12%',
+    height: 2,
+    background: 'linear-gradient(90deg, #2563eb, #C2151D, #7c3aed, #16a34a)',
+    borderRadius: 2, zIndex: 0, opacity: 0.3,
+  }} className="hide-mobile" />
+
+  {steps.map((s, i) => (
+    <Reveal key={s.num} delay={i * 0.12}>
+      <div style={{ textAlign: 'center', padding: 24, position: 'relative', zIndex: 1 }}>
+        {/* Big icon circle */}
+        <div style={{
+          width: 70, height: 70, borderRadius: '50%', background: s.color,
+          color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center',
+          margin: '0 auto 8px', boxShadow: `0 8px 25px ${s.color}40`,
+          transition: 'transform 0.3s',
+        }}
+        onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.1)'}
+        onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+        >
+          <FontAwesomeIcon icon={s.icon} style={{ width: 26, height: 26 }} />
+        </div>
+        {/* Number badge directly below icon */}
+        <div style={{
+          width: 24, height: 24, borderRadius: '50%', background: s.color,
+          color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center',
+          margin: '0 auto 14px', fontSize: '0.75rem', fontWeight: 900,
+        }}>{s.num}</div>
+        <h4 style={{ fontFamily: 'var(--font-display)', marginBottom: 10, fontSize: '1.1rem' }}>{s.title}</h4>
+        <p style={{ color: 'var(--gray-600)', fontSize: '0.92rem', lineHeight: 1.65 }}>{s.desc}</p>
+      </div>
+    </Reveal>
+  ))}
+</div>
         </div>
       </section>
 
-      {/* Form + Docs */}
+      {/* ── FORM + DOCS ── */}
       <section className="section" style={{ background: 'var(--gray-50)' }}>
         <div className="container">
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 40 }}>
+
             {/* Application Form */}
-            <div className="card" style={{ padding: 40 }}>
-              <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '1.5rem', marginBottom: 8 }}>Apply Online</h3>
-              <p style={{ color: 'var(--gray-600)', marginBottom: 28, fontSize: '0.95rem' }}>Fill out the form and our admissions team will contact you within 24 hours.</p>
-
-              {submitted ? (
-                <div style={{ textAlign: 'center', padding: '40px 0' }}>
-                  <div style={{ fontSize: '3rem', marginBottom: 16 }}>✅</div>
-                  <h4 style={{ fontFamily: 'var(--font-display)', marginBottom: 12 }}>Application Received!</h4>
-                  <p style={{ color: 'var(--gray-600)' }}>Our admissions team will contact you within 24 hours. JazakAllah Khair!</p>
+            <Reveal direction="left">
+              <div className="card" style={{ padding: 40 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 8 }}>
+                  <div style={{ width: 44, height: 44, borderRadius: 12, background: 'rgba(194,21,29,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <FontAwesomeIcon icon={faPaperPlane} style={{ width: 18, color: 'var(--crimson)' }} />
+                  </div>
+                  <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '1.5rem' }}>Apply Online</h3>
                 </div>
-              ) : (
-                <form onSubmit={handleSubmit}>
-                  <div className="form-group">
-                    <label>Student Full Name *</label>
-                    <input className="form-control" required value={form.name} onChange={e => setForm({...form, name: e.target.value})} placeholder="e.g. Ahmed Ali Khan" />
-                  </div>
-                  <div className="form-group">
-                    <label>Applying for Grade *</label>
-                    <select className="form-control" required value={form.grade} onChange={e => setForm({...form, grade: e.target.value})}>
-                      <option value="">Select Grade</option>
-                      {['Nursery','KG','Grade 1','Grade 2','Grade 3','Grade 4','Grade 5','Grade 6','Grade 7','Grade 8','Grade 9','Grade 10'].map(g => <option key={g}>{g}</option>)}
-                    </select>
-                  </div>
-                  <div className="form-group">
-                    <label>Parent Phone Number *</label>
-                    <input className="form-control" type="tel" required value={form.phone} onChange={e => setForm({...form, phone: e.target.value})} placeholder="+92 300 XXXXXXX" />
-                  </div>
-                  <div className="form-group">
-                    <label>Email Address</label>
-                    <input className="form-control" type="email" value={form.email} onChange={e => setForm({...form, email: e.target.value})} placeholder="parent@email.com" />
-                  </div>
-                  <div className="form-group">
-                    <label>Additional Message</label>
-                    <textarea className="form-control" rows={3} value={form.message} onChange={e => setForm({...form, message: e.target.value})} placeholder="Any specific questions or requirements..." />
-                  </div>
-                  <button type="submit" className="btn btn-primary" style={{ width: '100%', justifyContent: 'center', fontSize: '1rem' }}>Submit Application →</button>
-                </form>
-              )}
-            </div>
+                <p style={{ color: 'var(--gray-600)', marginBottom: 28, fontSize: '0.95rem' }}>Fill out the form and our admissions team will contact you within 24 hours.</p>
 
-            {/* Documents + Fee */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-              <div className="card" style={{ padding: 32 }}>
-                <h4 style={{ fontFamily: 'var(--font-display)', marginBottom: 20, fontSize: '1.2rem' }}>📋 Required Documents</h4>
-                <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 12 }}>
-                  {docs.map(d => (
-                    <li key={d} style={{ display: 'flex', gap: 12, alignItems: 'flex-start', fontSize: '0.95rem', color: 'var(--gray-600)' }}>
-                      <span style={{ color: 'var(--crimson)', fontWeight: 700, marginTop: 2 }}>✓</span>{d}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="card" style={{ padding: 32, background: 'var(--navy)', color: 'white' }}>
-                <h4 style={{ fontFamily: 'var(--font-display)', marginBottom: 20, fontSize: '1.2rem' }}>💰 Fee Structure</h4>
-                {[['Early Years (Nursery–KG)','PKR 3,500/month'],['Primary (Grade 1–5)','PKR 4,500/month'],['Middle School (6–8)','PKR 5,500/month'],['Secondary (Grade 9–10)','PKR 6,500/month']].map(([l,f]) => (
-                  <div key={l} style={{ display:'flex', justifyContent:'space-between', padding:'10px 0', borderBottom:'1px solid rgba(255,255,255,0.1)', fontSize:'0.9rem' }}>
-                    <span style={{ opacity: 0.8 }}>{l}</span>
-                    <span style={{ fontWeight: 700, color: 'var(--gold)' }}>{f}</span>
+                {submitted ? (
+                  <div style={{ textAlign: 'center', padding: '40px 0', animation: 'fadeInUp 0.5s ease' }}>
+                    <div style={{ width: 72, height: 72, borderRadius: '50%', background: 'rgba(22,163,74,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
+                      <FontAwesomeIcon icon={faCheckCircle} style={{ width: 36, height: 36, color: '#16a34a' }} />
+                    </div>
+                    <h4 style={{ fontFamily: 'var(--font-display)', marginBottom: 12, fontSize: '1.4rem' }}>Application Received!</h4>
+                    <p style={{ color: 'var(--gray-600)' }}>Our admissions team will contact you within 24 hours. JazakAllah Khair!</p>
                   </div>
-                ))}
-                <p style={{ fontSize: '0.8rem', opacity: 0.6, marginTop: 16 }}>* Sibling discounts available. Contact admin for scholarship details.</p>
+                ) : (
+                  <form onSubmit={handleSubmit}>
+                    <div className="form-group">
+                      <label>Student Full Name *</label>
+                      <input className="form-control" required value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} placeholder="e.g. Ahmed Ali Khan" />
+                    </div>
+                    <div className="form-group">
+                      <label>Applying for Grade *</label>
+                      <select className="form-control" required value={form.grade} onChange={e => setForm({ ...form, grade: e.target.value })}>
+                        <option value="">Select Grade</option>
+                        {['Nursery', 'KG', 'Grade 1', 'Grade 2', 'Grade 3', 'Grade 4', 'Grade 5', 'Grade 6', 'Grade 7', 'Grade 8', 'Grade 9', 'Grade 10'].map(g => <option key={g}>{g}</option>)}
+                      </select>
+                    </div>
+                    <div className="form-group">
+                      <label>Parent Phone Number *</label>
+                      <div style={{ position: 'relative' }}>
+                        <FontAwesomeIcon icon={faMobileAlt} style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', width: 14, color: 'var(--gray-400)' }} />
+                        <input className="form-control" type="tel" required value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })} placeholder="+92 300 XXXXXXX" style={{ paddingLeft: 40 }} />
+                      </div>
+                    </div>
+                    <div className="form-group">
+                      <label>Email Address</label>
+                      <div style={{ position: 'relative' }}>
+                        <FontAwesomeIcon icon={faEnvelope} style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', width: 14, color: 'var(--gray-400)' }} />
+                        <input className="form-control" type="email" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} placeholder="parent@email.com" style={{ paddingLeft: 40 }} />
+                      </div>
+                    </div>
+                    <div className="form-group">
+                      <label>Additional Message</label>
+                      <textarea className="form-control" rows={3} value={form.message} onChange={e => setForm({ ...form, message: e.target.value })} placeholder="Any specific questions or requirements..." />
+                    </div>
+                    <button type="submit" style={{
+                      width: '100%', padding: '14px', borderRadius: 8,
+                      background: 'var(--crimson)', color: 'white', border: 'none',
+                      cursor: 'pointer', fontFamily: 'var(--font-body)', fontWeight: 700,
+                      fontSize: '1rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+                      transition: 'all 0.2s', boxShadow: '0 6px 20px rgba(194,21,29,0.35)',
+                    }}
+                    onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 10px 30px rgba(194,21,29,0.45)'; }}
+                    onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 6px 20px rgba(194,21,29,0.35)'; }}
+                    >
+                      <FontAwesomeIcon icon={faPaperPlane} style={{ width: 14 }} />
+                      Submit Application
+                    </button>
+                  </form>
+                )}
               </div>
-            </div>
+            </Reveal>
+
+            {/* Docs + Fee */}
+            <Reveal direction="right">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+                {/* Required Documents */}
+                <div className="card" style={{ padding: 32 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
+                    <div style={{ width: 40, height: 40, borderRadius: 10, background: 'rgba(37,99,235,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <FontAwesomeIcon icon={faFileAlt} style={{ width: 16, color: '#2563eb' }} />
+                    </div>
+                    <h4 style={{ fontFamily: 'var(--font-display)', fontSize: '1.2rem' }}>Required Documents</h4>
+                  </div>
+                  <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 12 }}>
+                    {docs.map((d, i) => (
+                      <li key={i} style={{ display: 'flex', gap: 12, alignItems: 'center', fontSize: '0.92rem', color: 'var(--gray-600)', padding: '8px 0', borderBottom: i < docs.length - 1 ? '1px solid var(--gray-100)' : 'none' }}>
+                        <div style={{ width: 32, height: 32, borderRadius: 8, background: 'rgba(194,21,29,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                          <FontAwesomeIcon icon={d.icon} style={{ width: 13, color: 'var(--crimson)' }} />
+                        </div>
+                        {d.text}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Fee Structure */}
+                <div className="card" style={{ padding: 32, background: 'var(--navy)', color: 'white' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
+                    <div style={{ width: 40, height: 40, borderRadius: 10, background: 'rgba(212,168,67,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <FontAwesomeIcon icon={faMoneyBillWave} style={{ width: 16, color: '#d4a843' }} />
+                    </div>
+                    <h4 style={{ fontFamily: 'var(--font-display)', fontSize: '1.2rem' }}>Fee Structure</h4>
+                  </div>
+                  {fees.map(([l, f], i) => (
+                    <div key={l} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 0', borderBottom: i < fees.length - 1 ? '1px solid rgba(255,255,255,0.08)' : 'none', fontSize: '0.9rem' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 8, opacity: 0.8 }}>
+                        <FontAwesomeIcon icon={faUsers} style={{ width: 12, opacity: 0.6 }} />
+                        {l}
+                      </div>
+                      <span style={{ fontWeight: 700, color: '#d4a843' }}>{f}</span>
+                    </div>
+                  ))}
+                  <p style={{ fontSize: '0.8rem', opacity: 0.55, marginTop: 16 }}>* Sibling discounts available. Contact admin for scholarship details.</p>
+                </div>
+              </div>
+            </Reveal>
           </div>
         </div>
       </section>
 
-      {/* FAQs */}
+      {/* ── FAQs ── */}
       <section className="section">
         <div className="container" style={{ maxWidth: 760 }}>
-          <div style={{ textAlign: 'center', marginBottom: 48 }}>
-            <div className="badge" style={{ marginBottom: 16 }}>Questions?</div>
-            <h2 className="section-title">Frequently Asked Questions</h2>
-          </div>
+          <Reveal>
+            <div style={{ textAlign: 'center', marginBottom: 48 }}>
+              <div className="badge" style={{ marginBottom: 16 }}>
+                <FontAwesomeIcon icon={faQuestionCircle} style={{ width: 11, marginRight: 5 }} />
+                Questions?
+              </div>
+              <h2 className="section-title">Frequently Asked Questions</h2>
+            </div>
+          </Reveal>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
             {faqs.map((faq, i) => (
-              <div key={i} className="card" style={{ padding: 0, overflow: 'hidden' }}>
-                <button onClick={() => setOpenFaq(openFaq === i ? null : i)} style={{
-                  width: '100%', padding: '20px 24px', background: 'none', border: 'none', cursor: 'pointer',
-                  display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 16,
-                  fontFamily: 'var(--font-body)', fontSize: '1rem', fontWeight: 600, color: 'var(--navy)', textAlign: 'left',
-                }}>
-                  {faq.q}
-                  <span style={{ fontSize: '1.2rem', transition: 'transform 0.3s', transform: openFaq === i ? 'rotate(45deg)' : 'none', flexShrink: 0 }}>+</span>
-                </button>
-                {openFaq === i && (
-                  <div style={{ padding: '0 24px 20px', color: 'var(--gray-600)', lineHeight: 1.7 }}>{faq.a}</div>
-                )}
-              </div>
+              <Reveal key={i} delay={i * 0.06}>
+                <div className="card" style={{ padding: 0, overflow: 'hidden', transition: 'box-shadow 0.2s' }}
+                onMouseEnter={e => e.currentTarget.style.boxShadow = '0 8px 25px rgba(0,0,0,0.08)'}
+                onMouseLeave={e => e.currentTarget.style.boxShadow = 'var(--shadow-sm)'}
+                >
+                  <button onClick={() => setOpenFaq(openFaq === i ? null : i)} style={{
+                    width: '100%', padding: '20px 24px', background: 'none', border: 'none', cursor: 'pointer',
+                    display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 16,
+                    fontFamily: 'var(--font-body)', fontSize: '1rem', fontWeight: 600, color: 'var(--navy)', textAlign: 'left',
+                  }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                      <div style={{ width: 30, height: 30, borderRadius: 8, background: openFaq === i ? 'var(--crimson)' : 'rgba(194,21,29,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, transition: 'background 0.2s' }}>
+                        <FontAwesomeIcon icon={faQuestionCircle} style={{ width: 13, color: openFaq === i ? 'white' : 'var(--crimson)' }} />
+                      </div>
+                      {faq.q}
+                    </div>
+                    <FontAwesomeIcon icon={faChevronDown} style={{ width: 14, color: 'var(--gray-400)', flexShrink: 0, transition: 'transform 0.3s', transform: openFaq === i ? 'rotate(180deg)' : 'none' }} />
+                  </button>
+                  {openFaq === i && (
+                    <div style={{ padding: '0 24px 20px 66px', color: 'var(--gray-600)', lineHeight: 1.75, animation: 'fadeInUp 0.3s ease' }}>{faq.a}</div>
+                  )}
+                </div>
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
+
+      <style>{`
+        @keyframes heroFadeIn { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:none} }
+        @keyframes fadeInUp { from{opacity:0;transform:translateY(15px)} to{opacity:1;transform:none} }
+        @keyframes blob0 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-25px)} }
+        @keyframes blob1 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(20px)} }
+      `}</style>
     </>
   );
 }

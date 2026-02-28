@@ -85,8 +85,8 @@ export default function Navbar() {
               <img src="/logo-elaaf.png" alt="ESS Logo" style={{ width: '85%' }} />
             </div>
             <div>
-              <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '1rem', color: dark ? 'white' : '#0d1b3e', lineHeight: 1.1 }}>Elaaf School</div>
-              <div style={{ fontSize: '0.65rem', color: 'var(--crimson)', fontWeight: 600, letterSpacing: '0.05em' }}>SYSTEM</div>
+              <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '1rem', color: dark ? 'white' : '#0d1b3e', lineHeight: 1.1 ,marginTop: 4 }}>Elaaf School</div>
+              <div style={{ fontSize: '0.85rem', color: 'var(--crimson)', fontWeight: 600, letterSpacing: '0.05em' }}>SYSTEM</div>
             </div>
           </Link>
 
