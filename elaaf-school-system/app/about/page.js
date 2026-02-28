@@ -7,10 +7,10 @@ export const metadata = {
 };
 
 const teamMembers = [
-  { name: 'Mr. Abdul Rahman', role: 'Principal', exp: '20+ Years Experience', initial: 'A' },
-  { name: 'Mrs. Ayesha Siddiqui', role: 'Head of Academics', exp: '15+ Years Experience', initial: 'A' },
-  { name: 'Mr. Tariq Ahmed', role: 'Head of Sciences', exp: '12+ Years Experience', initial: 'T' },
-  { name: 'Mrs. Zara Malik', role: 'Head of Primary', exp: '10+ Years Experience', initial: 'Z' },
+  { name: 'Ms. Huda Sheikh', role: 'Principal', exp: '10+ Years Experience', initial: 'H' },
+  { name: 'Mr. Hameed Sheikh', role: 'Head of Academics', exp: '15+ Years Experience', initial: 'H' },
+  { name: 'Mr. Syed M. Abbas', role: 'Head of Computer Science', exp: '10+ Years Experience', initial: 'A' },
+  { name: 'Mrs. Kanwal', role: 'Head of Primary', exp: '10+ Years Experience', initial: 'K' },
 ];
 
 const values = [

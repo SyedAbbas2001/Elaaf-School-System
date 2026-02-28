@@ -63,7 +63,7 @@ export default function GalleryPage() {
           <div style={{ textAlign: 'center', marginTop: 48, padding: 40, background: 'var(--gray-50)', borderRadius: 16, border: '2px dashed var(--gray-200)' }}>
             <div style={{ fontSize: '2.5rem', marginBottom: 12 }}>📸</div>
             <h4 style={{ fontFamily: 'var(--font-display)', marginBottom: 8 }}>More photos coming soon!</h4>
-            <p style={{ color: 'var(--gray-600)' }}>Replace the placeholder images in <code>/public/gallery/</code> to display your actual school photos.</p>
+            
           </div>
         </div>
       </section>

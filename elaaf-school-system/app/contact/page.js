@@ -45,13 +45,17 @@ export default function ContactPage() {
               </div>
 
               {/* Map placeholder */}
-              <div style={{ borderRadius: 16, overflow: 'hidden', height: 220, background: 'linear-gradient(135deg, #e2e8f0, #cbd5e1)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', color: 'var(--gray-600)', border: '2px dashed var(--gray-200)' }}>
-                <div style={{ fontSize: '2.5rem', marginBottom: 8 }}>🗺️</div>
-                <p style={{ fontSize: '0.9rem', textAlign: 'center', padding: '0 20px' }}>
-                  Replace with Google Maps embed.<br />
-                  <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--crimson)', fontWeight: 600 }}>View on Google Maps →</a>
-                </p>
-              </div>
+                <div style={{ borderRadius: 16, overflow: 'hidden', height: 250, width: '100%', marginTop: 24 }}>
+  <iframe
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3616.074887028365!2d67.0666743!3d24.9975712!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x394ccdcd98342cf5%3A0x885906e320cced0a!2sELAAF%20SCHOOL%20SYSTEM!5e0!3m2!1sen!2s!4v1772263644294!5m2!1sen!2s"
+    width="100%"
+    height="400"
+    style={{ border: 0, display: 'block', width: '100%' }}
+    allowFullScreen=""
+    loading="lazy"
+    referrerPolicy="no-referrer-when-downgrade"
+  />
+</div>
             </div>
 
             {/* Contact Form */}
