@@ -202,4 +202,5 @@ footer a:hover {
 @media (max-width: 768px) {
   .section { padding: 50px 0; }
   .hide-mobile { display: none !important; }
+  .logo-name { display: none !important; }
 }

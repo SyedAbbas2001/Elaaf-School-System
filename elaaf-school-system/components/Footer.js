@@ -111,7 +111,7 @@ export default function Footer() {
                   <div style={{ width: 32, height: 32, borderRadius: 8, background: 'rgba(255,255,255,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                     <FontAwesomeIcon icon={icon} style={{ width: 14, height: 14, color: 'var(--crimson)' }} />
                   </div>
-                  <span style={{ paddingTop: 6, lineHeight: 1.5 }}>{text}</span>
+                  <span style={{ paddingTop: 6, lineHeight: 1.5, wordBreak: 'break-word' }}>{text}</span>
                 </div>
               ))}
             </div>
