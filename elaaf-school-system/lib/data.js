@@ -10,10 +10,10 @@ export const schoolInfo = {
   phone: '0333 2785646',
   email: 'sendtoelaafschool@gmail.com',
   website: 'www.elaafschoolsystem.com',
-  foundedYear: 2013,
+  foundedYear: 2010,
   socialMedia: {
-    facebook: '#',
-    instagram: '#',
+    facebook: 'https://www.facebook.com/ELAAFSCHOOL',
+    instagram: 'https://www.instagram.com/elaafschool',
     twitter: '#',
     youtube: '#',
   },
@@ -22,7 +22,7 @@ export const schoolInfo = {
 export const stats = [
   { value: '1500+', label: 'Students Enrolled' },
   { value: '80+', label: 'Qualified Teachers' },
-  { value: '15+', label: 'Years of Excellence' },
+  { value: '5+', label: 'Years of Excellence' },
   { value: '98%', label: 'Pass Rate' },
 ];
 

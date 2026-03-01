@@ -137,7 +137,7 @@ export default function AcademicsPage() {
       </section>
 
       {/* ── CTA (same design) ── */}
-      <section style={{ background: 'var(--crimson)', padding: '60px 0', textAlign: 'center', color: 'white' }}>
+      <section className='cta-section' style={{ padding: '60px 0', textAlign: 'center', color: 'white' }}>
         <div className="container">
           <Reveal>
             <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '2rem', marginBottom: 16 }}>Ready to Enroll?</h2>

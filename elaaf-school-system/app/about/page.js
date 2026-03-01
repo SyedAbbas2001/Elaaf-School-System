@@ -87,8 +87,7 @@ export default function AboutPage() {
   return (
     <>
       {/* ── HERO ── */}
-      <div style={{
-        background: 'linear-gradient(135deg, #0d1b3e 0%, #1a3a6b 50%, #8b0a0f 100%)',
+      <div className='page-hero-bg' style={{
         padding: '100px 0 70px', color: 'white', textAlign: 'center',
         position: 'relative', overflow: 'hidden',
       }}>
@@ -130,7 +129,7 @@ export default function AboutPage() {
       </section>
 
       {/* ── STATS ── */}
-      <section style={{ background:'linear-gradient(135deg, #0d1b3e, #1a3a6b)', padding:'65px 0', position:'relative', overflow:'hidden' }}>
+      <section className='stats-section-about' style={{ background:'linear-gradient(135deg, #0d1b3e, #1a3a6b)', padding:'65px 0', position:'relative', overflow:'hidden' }}>
         <div style={{ position:'absolute', inset:0, backgroundImage:'radial-gradient(circle at 20% 50%, rgba(194,21,29,0.1) 0%, transparent 50%)' }} />
         <div className="container" style={{ position:'relative' }}>
           <div className="grid-4">
@@ -223,7 +222,7 @@ export default function AboutPage() {
       </section>
 
       {/* ── CTA ── */}
-      <section style={{ background:'var(--crimson)', padding:'70px 0', textAlign:'center', color:'white', position:'relative', overflow:'hidden' }}>
+      <section className='cta-section' style={{ padding:'70px 0', textAlign:'center', color:'white', position:'relative', overflow:'hidden' }}>
         <div style={{ position:'absolute', inset:0, backgroundImage:'radial-gradient(circle at 20% 50%, rgba(255,255,255,0.08) 0%, transparent 50%), radial-gradient(circle at 80% 50%, rgba(0,0,0,0.1) 0%, transparent 50%)' }} />
         <div className="container" style={{ position:'relative' }}>
           <Reveal>

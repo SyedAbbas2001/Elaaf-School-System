@@ -27,7 +27,7 @@ function Reveal({ children, delay = 0 }) {
     </div>
   );
 }
-
+ 
 export default function EventsPage() {
   const [active, setActive] = useState('All');
   const filtered = active === 'All' ? events : events.filter(e => e.category === active);

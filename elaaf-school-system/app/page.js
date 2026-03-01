@@ -127,9 +127,8 @@ export default function HomePage() {
   return (
     <>
       {/* ══ HERO ══ */}
-      <section style={{
+      <section className='hero-bg' style={{
         minHeight: '93vh', display: 'flex', alignItems: 'center', justifyContent: 'center',
-        background: 'linear-gradient(135deg, #0d1b3e 0%, #1a3a6b 45%, #8b0a0f 100%)',
         color: 'white', textAlign: 'center', position: 'relative', overflow: 'hidden', padding: '80px 24px 60px',
       }}>
         {/* Animated background particles */}
@@ -244,7 +243,7 @@ export default function HomePage() {
       </section>
 
       {/* ══ STATS ══ */}
-      <section style={{ background: 'var(--crimson)', padding: '55px 0', position: 'relative', overflow: 'hidden' }}>
+      <section className="stats-section" style={{  padding: '55px 0', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', inset: 0, backgroundImage: 'radial-gradient(circle at 20% 50%, rgba(255,255,255,0.05) 0%, transparent 50%), radial-gradient(circle at 80% 50%, rgba(0,0,0,0.1) 0%, transparent 50%)' }} />
         <div className="container" style={{ position: 'relative' }}>
           <div className="grid-4">
@@ -553,7 +552,7 @@ export default function HomePage() {
       </section>
 
       {/* ══ CTA ══ */}
-      <section style={{ padding: '80px 0', background: 'var(--crimson)', position: 'relative', overflow: 'hidden' }}>
+      <section className='cta-section' style={{ padding: '80px 0', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', inset: 0, backgroundImage: 'radial-gradient(circle at 20% 50%, rgba(255,255,255,0.08) 0%, transparent 50%), radial-gradient(circle at 80% 50%, rgba(0,0,0,0.1) 0%, transparent 50%)' }} />
         <div className="container" style={{ textAlign: 'center', position: 'relative' }}>
           <Reveal>

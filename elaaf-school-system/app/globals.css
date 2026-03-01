@@ -65,7 +65,41 @@ body {
   grid-template-columns: repeat(2, 1fr);
   gap: 16px;
 }
-
+/* Stats background image */
+.stats-section {
+  background-image: linear-gradient(rgba(194, 21, 29, 1), rgba(139, 10, 15, 0.92)), url("../public/groups.jpg") !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-attachment: fixed !important;
+}
+.stats-section-about{
+  background-image: linear-gradient(rgba(13, 27, 62, 0.88), rgba(26, 58, 107, 0.92)), url("../public/elaaf\ group.jpg") !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-attachment: fixed !important;
+}
+.cta-section {
+  background-image: linear-gradient(rgba(194, 21, 29, 0.88), rgba(139, 10, 15, 0.92)), url("../public/campus.jpg") !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-attachment: fixed !important;
+}
+.page-hero-bg {
+  background-image: 
+    linear-gradient(135deg, rgba(13, 27, 62, 0.92) 0%, rgba(26, 58, 107, 0.88) 50%, rgba(139, 10, 15, 0.90) 100%),
+    url("../public/group2.jpg") !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-attachment: fixed !important;
+}
+.hero-bg {
+  background-image: 
+    linear-gradient(135deg, rgba(13, 27, 62, 0.92) 0%, rgba(26, 58, 107, 0.88) 50%, rgba(139, 10, 15, 0.90) 100%),
+    url("../public/hero.jpg") !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-attachment: fixed !important;
+}
 /* Tablet */
 @media (max-width: 992px) {
   .about-grid {
