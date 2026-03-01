@@ -60,7 +60,25 @@ body {
   line-height: 1.6;
   transition: background var(--transition), color var(--transition);
 }
+.about-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
 
+/* Tablet */
+@media (max-width: 992px) {
+  .about-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .about-grid {
+    grid-template-columns: 1fr;
+  }
+}
 h1, h2, h3, h4 { font-family: var(--font-display); line-height: 1.2; }
 
 a { text-decoration: none; color: inherit; }

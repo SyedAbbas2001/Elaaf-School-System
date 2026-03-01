@@ -309,7 +309,7 @@ export default function HomePage() {
             </Reveal>
 
             <Reveal direction="right">
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+              <div className="about-grid">
                 {aboutFeatures.map((item, i) => (
                   <div key={item.title} className="card" style={{
                     padding: 28, transition: 'all 0.3s', cursor: 'default',
