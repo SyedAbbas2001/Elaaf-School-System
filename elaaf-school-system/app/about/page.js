@@ -15,10 +15,11 @@ import { stats } from '@/lib/data';
 // };
 
 const teamMembers = [
-  { name: 'Ms. Huda Sheikh', role: 'Principal', exp: '10+ Years Experience', initial: 'H', color: '#C2151D' },
-  { name: 'Mr. Hameed Sheikh', role: 'Head of Academics', exp: '15+ Years Experience', initial: 'H', color: '#0d1b3e' },
+  { name: 'Ms. Huda Shaikh', role: 'Principal', exp: '10+ Years Experience', initial: 'H', color: '#C2151D' },
+  { name: 'Mr. Hameed Shaikh', role: 'Head of Academics', exp: '15+ Years Experience', initial: 'H', color: '#0d1b3e' },
+  { name: 'Mrs. Kanwal', role: 'Secondary Incharge', exp: '10+ Years Experience', initial: 'K', color: '#d4a843' },
   { name: 'Mr. Syed M. Abbas', role: 'Head of Computer Science', exp: '10+ Years Experience', initial: 'A', color: '#1a3a6b' },
-  { name: 'Mrs. Kanwal', role: 'Head of Primary', exp: '10+ Years Experience', initial: 'K', color: '#d4a843' },
+ 
 ];
 
 const values = [

@@ -214,7 +214,7 @@ export const faqs = [
   },
   {
     q: 'Is transport facility available?',
-    a: 'Yes, we provide safe and reliable transport services covering major areas of Karachi. Contact the admin office for route details.',
+    a: 'No, we do not provide transport services. Contact the admin office for more details.',
   },
   {
     q: 'Do you offer scholarships?',
@@ -222,6 +222,6 @@ export const faqs = [
   },
   {
     q: 'What board/curriculum do you follow?',
-    a: 'We follow the Federal Board and Sindh Board curriculum. Our teaching methodology aligns with modern educational standards while maintaining Islamic values.',
+    a: 'We follow the Sindh Board curriculum. Our teaching methodology aligns with modern educational standards while maintaining Islamic values.',
   },
 ];

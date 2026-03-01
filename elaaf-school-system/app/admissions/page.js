@@ -11,7 +11,7 @@ import {
 import { faqs } from '@/lib/data';
 
 const steps = [
-  { num: 1, icon: faFileAlt, title: 'Download Form', desc: 'Get the admission form from our office or download it online.', color: '#2563eb' },
+  { num: 1, icon: faFileAlt, title: 'Fill the Form', desc: 'Get the admission form from our office or fill it online.', color: '#2563eb' },
   { num: 2, icon: faPencilAlt, title: 'Entrance Test', desc: 'Student appears for a grade-appropriate entrance test at our campus.', color: '#C2151D' },
   { num: 3, icon: faComments, title: 'Interview', desc: 'Brief interview with parents and student with our academic head.', color: '#7c3aed' },
   { num: 4, icon: faGraduationCap, title: 'Enrollment', desc: 'Submit documents, pay fees and receive your welcome kit!', color: '#16a34a' },
