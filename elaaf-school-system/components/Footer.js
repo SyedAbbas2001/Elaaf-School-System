@@ -25,8 +25,8 @@ export default function Footer() {
   ];
 
   const socialLinks = [
-    { icon: faFacebook, href: '#', color: '#1877F2' },
-    { icon: faInstagram, href: '#', color: '#E4405F' },
+    { icon: faFacebook, href: 'https://www.facebook.com/ELAAFSCHOOL', color: '#1877F2' },
+    { icon: faInstagram, href: 'https://www.instagram.com/elaafschool', color: '#E4405F' },
     { icon: faTwitter, href: '#', color: '#1DA1F2' },
     { icon: faYoutube, href: '#', color: '#FF0000' },
   ];

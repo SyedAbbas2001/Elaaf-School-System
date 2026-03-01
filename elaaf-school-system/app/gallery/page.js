@@ -34,9 +34,9 @@ export default function GalleryPage() {
 
   return (
     <>
-      <div style={{ background: 'linear-gradient(135deg, #0d1b3e 0%, #1a3a6b 50%, #8b0a0f 100%)', padding: '100px 0 70px', color: 'white', textAlign: 'center', position: 'relative', overflow: 'hidden',  }}>
+      <div style={{ background: 'linear-gradient(135deg, #0d1b3e 0%, #1a3a6b 50%, #8b0a0f 100%)', padding: '100px 0 70px', color: 'white', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', inset: 0, backgroundImage: 'linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)', backgroundSize: '60px 60px' }} />
-        <div className="container" style={{ position: 'relative', zIndex: 1 , animation: 'heroFadeIn 0.8s ease'}}>
+        <div className="container" style={{ position: 'relative', zIndex: 1, animation: 'heroFadeIn 0.8s ease' }}>
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '6px 18px', borderRadius: 20, background: 'rgba(212,168,67,0.2)', border: '1px solid rgba(212,168,67,0.4)', fontSize: '0.82rem', fontWeight: 700, marginBottom: 20, color: '#d4a843' }}>
             <FontAwesomeIcon icon={faImages} style={{ width: 12 }} /> Campus Life
           </div>
@@ -63,20 +63,32 @@ export default function GalleryPage() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 16 }}>
             {filtered.map((img, i) => (
               <Reveal key={img.id} delay={i * 0.06}>
-                <div onClick={() => setLightbox(img)} style={{ borderRadius: 14, overflow: 'hidden', cursor: 'pointer', position: 'relative', height: img.id % 3 === 0 ? 280 : 220, background: img.color, transition: 'transform 0.3s' }}
-                onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.03)'; e.currentTarget.querySelector('.overlay').style.opacity = 1; }}
-                onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.querySelector('.overlay').style.opacity = 0; }}
+                <div onClick={() => setLightbox(img)}
+                  style={{ borderRadius: 14, overflow: 'hidden', cursor: 'pointer', position: 'relative', height: img.id % 3 === 0 ? 280 : 280, background: img.color, transition: 'transform 0.3s' }}
+                  onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.03)'; e.currentTarget.querySelector('.overlay').style.opacity = 1; }}
+                  onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.querySelector('.overlay').style.opacity = 0; }}
                 >
-                  <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-                    <FontAwesomeIcon icon={catIcons[img.category] || faImages} style={{ width: 40, height: 40, color: 'rgba(255,255,255,0.3)', marginBottom: 8 }} />
-                    <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.82rem' }}>Photo Coming Soon</div>
-                  </div>
+                  {/* ── Real image OR placeholder ── */}
+                  {img.image ? (
+                    <img
+                      src={img.image}
+                      alt={img.caption}
+                      style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                    />
+                  ) : (
+                    <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                      <FontAwesomeIcon icon={catIcons[img.category] || faImages} style={{ width: 40, height: 40, color: 'rgba(255,255,255,0.3)', marginBottom: 8 }} />
+                      <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.82rem' }}>Photo Coming Soon</div>
+                    </div>
+                  )}
+
                   {/* Hover overlay */}
                   <div className="overlay" style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0, transition: 'opacity 0.3s' }}>
                     <div style={{ width: 48, height: 48, borderRadius: '50%', background: 'rgba(255,255,255,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', backdropFilter: 'blur(4px)' }}>
                       <FontAwesomeIcon icon={faExpand} style={{ width: 20, color: 'white' }} />
                     </div>
                   </div>
+
                   {/* Caption */}
                   <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '20px 16px 16px', background: 'linear-gradient(transparent, rgba(0,0,0,0.7))' }}>
                     <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, padding: '3px 10px', borderRadius: 20, background: 'rgba(255,255,255,0.2)', fontSize: '0.72rem', color: 'white', marginBottom: 6 }}>
@@ -93,26 +105,43 @@ export default function GalleryPage() {
             <div style={{ textAlign: 'center', marginTop: 48, padding: 40, background: 'var(--gray-50)', borderRadius: 16, border: '2px dashed var(--gray-200)' }}>
               <FontAwesomeIcon icon={faImages} style={{ width: 40, height: 40, color: 'var(--gray-300)', marginBottom: 12 }} />
               <h4 style={{ fontFamily: 'var(--font-display)', marginBottom: 8 }}>More photos coming soon!</h4>
-            
             </div>
           </Reveal>
         </div>
       </section>
 
+      {/* Lightbox */}
       {lightbox && (
         <div onClick={() => setLightbox(null)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.92)', zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24, cursor: 'pointer', animation: 'fadeIn 0.3s ease' }}>
-          <div onClick={e => e.stopPropagation()} style={{ background: lightbox.color, borderRadius: 20, padding: 48, maxWidth: 500, width: '100%', textAlign: 'center', position: 'relative' }}>
-            <button onClick={() => setLightbox(null)} style={{ position: 'absolute', top: 16, right: 16, background: 'rgba(0,0,0,0.3)', border: 'none', color: 'white', width: 38, height: 38, borderRadius: '50%', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div onClick={e => e.stopPropagation()} style={{ borderRadius: 20, maxWidth: 700, width: '100%', textAlign: 'center', position: 'relative', overflow: 'hidden', background: lightbox.color }}>
+            <button onClick={() => setLightbox(null)} style={{ position: 'absolute', top: 16, right: 16, background: 'rgba(0,0,0,0.5)', border: 'none', color: 'white', width: 38, height: 38, borderRadius: '50%', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1 }}>
               <FontAwesomeIcon icon={faTimes} style={{ width: 16 }} />
             </button>
-            <FontAwesomeIcon icon={catIcons[lightbox.category] || faImages} style={{ width: 60, height: 60, color: 'rgba(255,255,255,0.4)', marginBottom: 20 }} />
-            <h3 style={{ fontFamily: 'var(--font-display)', color: 'white', marginBottom: 8, fontSize: '1.5rem' }}>{lightbox.caption}</h3>
-            <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>
-              <FontAwesomeIcon icon={faTag} style={{ width: 12 }} /> {lightbox.category}
-            </span>
+
+            {/* Real image in lightbox */}
+            {lightbox.image ? (
+              <img
+                src={lightbox.image}
+                alt={lightbox.caption}
+                style={{ width: '100%', maxHeight: '80vh', objectFit: 'contain', display: 'block' ,objectFit: 'cover',}}
+              />
+            ) : (
+              <div style={{ padding: 48 }}>
+                <FontAwesomeIcon icon={catIcons[lightbox.category] || faImages} style={{ width: 60, height: 60, color: 'rgba(255,255,255,0.4)', marginBottom: 20 }} />
+              </div>
+            )}
+
+            {/* Caption bar */}
+            <div style={{ padding: '16px 24px', background: 'rgba(0,0,0,0.6)' }}>
+              <h3 style={{ fontFamily: 'var(--font-display)', color: 'white', marginBottom: 6, fontSize: '1.2rem' }}>{lightbox.caption}</h3>
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>
+                <FontAwesomeIcon icon={faTag} style={{ width: 12 }} /> {lightbox.category}
+              </span>
+            </div>
           </div>
         </div>
       )}
+
       <style>{`@keyframes heroFadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}} @keyframes fadeIn{from{opacity:0}to{opacity:1}}`}</style>
     </>
   );

@@ -123,17 +123,16 @@ export const events = [
 ];
 
 export const galleryImages = [
-  { id: 1, category: 'Campus', caption: 'Main Building', color: '#1a3a6b' },
-  { id: 2, category: 'Sports', caption: 'Sports Day 2025', color: '#C2151D' },
-  { id: 3, category: 'Academic', caption: 'Science Lab', color: '#0d1b3e' },
-  { id: 4, category: 'Cultural', caption: 'Annual Function', color: '#d4a843' },
-  { id: 5, category: 'Campus', caption: 'Library', color: '#2c5364' },
-  { id: 6, category: 'Sports', caption: 'Cricket Team', color: '#1a3a6b' },
-  { id: 7, category: 'Academic', caption: 'Computer Lab', color: '#C2151D' },
-  { id: 8, category: 'Cultural', caption: 'Art Exhibition', color: '#203a43' },
-  { id: 9, category: 'Campus', caption: 'Classroom', color: '#0d1b3e' },
+  { id: 1, category: 'Campus', caption: 'Main Building', color: '#1a3a6b', image: '/campus.jpg' },
+  { id: 2, category: 'Sports', caption: 'Sports Day 2025', color: '#C2151D', image: '/sports day.jpg' },
+  { id: 3, category: 'Academic', caption: 'Spelling Bee', color: '#0d1b3e', image: '/spelling bee.jpg' },
+  { id: 4, category: 'Academic', caption: 'Annual Function', color: '#d4a843', image: '/annual.jpg' },
+  { id: 5, category: 'Cultural', caption: 'Teachers Day', color: '#2c5364', image: '/teachers day.jpg' },
+  { id: 6, category: 'Cultural', caption: 'Eid Milad Un Nabi', color: '#1a3a6b', image: '/Eid e milad.jpg' },
+  { id: 7, category: 'Campus', caption: '14th August', color: '#C2151D', image: '/14th august.jpg' },
+  { id: 8, category: 'Academic', caption: 'Science Exhibition', color: '#203a43', image: '/exhibition.jpg' },
+  { id: 9, category: 'Campus', caption: 'Art and Craft', color: '#0d1b3e', image: '/art day.jpg' },
 ];
-
 export const testimonials = [
   {
     id: 1,
