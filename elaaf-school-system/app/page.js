@@ -191,10 +191,16 @@ export default function HomePage() {
             "Committed to a Better Tomorrow"
           </p>
           <p style={{
-            fontSize: '1rem', opacity: 0.75, maxWidth: 520, margin: '0 auto 36px',
+            fontSize: '1rem', opacity: 0.75, maxWidth: 520, margin: '0 auto 16px',
             lineHeight: 1.7, animation: 'slideUp 0.8s ease 0.6s both',
           }}>
             Quality education rooted in Islamic values. Nurturing confident, capable citizens in the heart of Karachi.
+          </p>
+          <p style={{
+            fontSize: '1rem', opacity: 0.75, maxWidth: 520, margin: '0 auto 16px',
+            lineHeight: 1.7, animation: 'slideUp 0.8s ease 0.6s both',
+          }}>
+            Our New Academic Year Begins In
           </p>
 
           <div style={{ animation: 'slideUp 0.8s ease 0.7s both' }}>

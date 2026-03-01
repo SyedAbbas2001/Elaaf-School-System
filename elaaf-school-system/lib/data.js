@@ -6,11 +6,11 @@
 export const schoolInfo = {
   name: 'Elaaf School System',
   tagline: 'Committed to a Better Tomorrow',
-  address: 'Karachi, Sindh, Pakistan',
-  phone: '+92 21 XXXXXXX',
-  email: 'info@elaafschoolsystem.com',
+  address: 'B-13 Service Road, Sector 5-I, North Karachi, Karachi, Pakistan',
+  phone: '0333 2785646',
+  email: 'sendtoelaafschool@gmail.com',
   website: 'www.elaafschoolsystem.com',
-  foundedYear: 2010,
+  foundedYear: 2013,
   socialMedia: {
     facebook: '#',
     instagram: '#',

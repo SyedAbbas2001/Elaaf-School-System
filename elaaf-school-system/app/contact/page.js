@@ -30,7 +30,7 @@ const contactInfo = [
   { icon: faMapMarkerAlt, label: 'Address', value: schoolInfo.address, color: '#C2151D' },
   { icon: faPhone, label: 'Phone', value: schoolInfo.phone, color: '#16a34a' },
   { icon: faEnvelope, label: 'Email', value: schoolInfo.email, color: '#2563eb' },
-  { icon: faClock, label: 'Office Hours', value: 'Mon–Sat: 8:00 AM – 3:00 PM', color: '#d97706' },
+  { icon: faClock, label: 'Office Hours', value: 'Mon–Sat: 8:00 AM – 2:00 PM', color: '#d97706' },
 ];
 
 export default function ContactPage() {
@@ -98,7 +98,7 @@ export default function ContactPage() {
                       </div>
                       <div>
                         <div style={{ fontWeight: 700, fontSize: '0.8rem', color: 'var(--gray-400)', marginBottom: 4, textTransform: 'uppercase', letterSpacing: '0.06em' }}>{c.label}</div>
-                        <div style={{ color: 'var(--navy)', fontWeight: 500, fontSize: '0.95rem' }}>{c.value}</div>
+                        <div style={{ color: 'var(--navy)', fontWeight: 500, fontSize: '0.95rem' ,maxWidth: 300}}>{c.value}</div>
                       </div>
                     </div>
                   ))}
