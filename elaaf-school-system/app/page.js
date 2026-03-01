@@ -125,7 +125,7 @@ export default function HomePage() {
   const catColors = { Sports: '#16a34a', Academic: '#2563eb', Admissions: '#C2151D', Islamic: '#7c3aed', Cultural: '#d97706' };
 
   return (
-    <div style={{overflow: 'hidden'}}>
+    <>
       {/* ══ HERO ══ */}
       <section style={{
         minHeight: '93vh', display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -602,6 +602,6 @@ export default function HomePage() {
         @keyframes pulse { 0%,100%{box-shadow:0 8px 32px rgba(0,0,0,0.2)} 50%{box-shadow:0 8px 32px rgba(194,21,29,0.3)} }
         @keyframes fadeInUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:none} }
       `}</style>
-    </div>
+    </>
   );
 }
