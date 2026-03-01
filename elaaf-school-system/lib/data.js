@@ -65,7 +65,7 @@ export const programs = [
     id: 4,
     level: 'Secondary',
     grades: 'Grade 9 – 10',
-    description: 'Rigorous SSC preparation aligned with Federal and Sindh Board curriculum for strong O-level equivalent results.',
+    description: 'Rigorous SSC preparation aligned with the Sindh Board curriculum to ensure strong academic performance and O-Level equivalent outcomes.',
     icon: '🎓',
     subjects: ['Sciences', 'Commerce', 'Humanities', 'Computer Science', 'English Literature'],
   },
