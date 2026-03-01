@@ -25,7 +25,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body style={{overflowX: 'hidden'}}>
+      <body>
         <Navbar />
         <main>{children}</main>
         <Footer />

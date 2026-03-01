@@ -35,7 +35,20 @@
   --gray-600: #94a3b8;
   --gray-800: #e2e8f0;
 }
+/* Add this at the very top of globals.css */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
 
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+.container {
+  max-width: 100%;
+  padding-left: 16px;
+  padding-right: 16px;
+}
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 html { scroll-behavior: smooth; }
