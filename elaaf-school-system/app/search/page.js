@@ -97,7 +97,7 @@ function SchoolCard({ school, selected, onToggle }) {
 }
 
 function CompareModal({ schools, onClose }) {
-  const elaaf = { name: 'Elaaf School System', grades: 'Nursery – Grade 10', fee: 'PKR 3,500–6,500/month', rating: 4.7, type: 'Private', features: ['Islamic Values', 'Experienced Teachers', 'Sports', 'Labs', 'Library'] };
+  const elaaf = { name: 'Elaaf School System', grades: 'Nursery – Grade 10', fee: 'PKR 3,500/month', rating: 4.7, type: 'Private', features: ['Islamic Values', 'Experienced Teachers', 'Sports', 'Labs', 'Library'] };
   const compare = [elaaf, ...schools];
   return (
     <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.85)', zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16, animation: 'fadeIn 0.3s ease' }}>

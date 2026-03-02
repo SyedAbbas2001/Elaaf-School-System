@@ -3,12 +3,15 @@ import { useState, useEffect, useRef } from 'react';
 import emailjs from "@emailjs/browser";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faFileAlt, faPencilAlt, faComments, faGraduationCap,
-  faCheckCircle, faIdCard, faBaby, faSchool, faMobileAlt,
-  faEnvelope, faMoneyBillWave, faQuestionCircle, faChevronDown,
-  faPaperPlane, faUsers, faSpinner,
+  faCheckCircle, faCalendarAlt, faPhone,
+  faFileAlt, faPaperPlane, faMobileAlt, faEnvelope,
+  faSpinner, faUsers, faStar, faMoneyBillWave,
+  faGraduationCap, faPencilAlt, faComments,
+  faBaby, faIdCard, faSchool,
+  faQuestionCircle, faChevronDown,
 } from '@fortawesome/free-solid-svg-icons';
 import { faqs } from '@/lib/data';
+import Link from 'next/link';
 
 const steps = [
   { num: 1, icon: faFileAlt, title: 'Fill the Form', desc: 'Get the admission form from our office or fill it online.', color: '#2563eb' },
@@ -25,12 +28,12 @@ const docs = [
   { icon: faFileAlt, text: 'Transfer Certificate (if applicable)' },
 ];
 
-const fees = [
-  ['Early Years (Nursery–KG)', 'PKR 3,500/month'],
-  ['Primary (Grade 1–5)', 'PKR 4,500/month'],
-  ['Middle School (6–8)', 'PKR 5,500/month'],
-  ['Secondary (Grade 9–10)', 'PKR 6,500/month'],
-];
+// const fees = [
+//   ['Early Years (Nursery–KG)', 'PKR 3,500/month'],
+//   ['Primary (Grade 1–5)', 'PKR 4,500/month'],
+//   ['Middle School (6–8)', 'PKR 5,500/month'],
+//   ['Secondary (Grade 9–10)', 'PKR 6,500/month'],
+// ];
 
 function Reveal({ children, delay = 0, direction = 'up' }) {
   const ref = useRef(null);
@@ -303,24 +306,60 @@ export default function AdmissionsPage() {
                 </div>
 
                 {/* Fee Structure */}
-                <div className="card" style={{ padding: 32, background: 'var(--navy)', color: 'white' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
-                    <div style={{ width: 40, height: 40, borderRadius: 10, background: 'rgba(212,168,67,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      <FontAwesomeIcon icon={faMoneyBillWave} style={{ width: 16, color: '#d4a843' }} />
-                    </div>
-                    <h4 style={{ fontFamily: 'var(--font-display)', fontSize: '1.2rem' }}>Fee Structure</h4>
-                  </div>
-                  {fees.map(([l, f], i) => (
-                    <div key={l} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 0', borderBottom: i < fees.length - 1 ? '1px solid rgba(255,255,255,0.08)' : 'none', fontSize: '0.9rem' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 8, opacity: 0.8 }}>
-                        <FontAwesomeIcon icon={faUsers} style={{ width: 12, opacity: 0.6 }} />
-                        {l}
+                {/* ── Fee Structure Replacement ── */}
+                  <div className="card" style={{ padding: 32, background: 'var(--navy)', color: 'white' }}>
+                    
+                    {/* Header */}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 4 }}>
+                      <div style={{ width: 40, height: 40, borderRadius: 10, background: 'rgba(212,168,67,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <FontAwesomeIcon icon={faMoneyBillWave} style={{ width: 16, color: '#d4a843' }} />
                       </div>
-                      <span style={{ fontWeight: 700, color: '#d4a843' }}>{f}</span>
+                      <h4 style={{ fontFamily: 'var(--font-display)', fontSize: '1.2rem' }}>Fee Structure</h4>
                     </div>
-                  ))}
-                  <p style={{ fontSize: '0.8rem', opacity: 0.55, marginTop: 16 }}>* Sibling discounts available. Contact admin for scholarship details.</p>
-                </div>
+
+                    {/* Main message */}
+                    <div style={{ textAlign: 'center', padding: '12px 0 20px' }}>
+                      <div style={{ width: 64, height: 64, borderRadius: '50%', background: 'rgba(212,168,67,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px', border: '2px solid rgba(212,168,67,0.3)' }}>
+                        <FontAwesomeIcon icon={faMoneyBillWave} style={{ width: 26, color: '#d4a843' }} />
+                      </div>
+                      <h5 style={{ fontFamily: 'var(--font-display)', fontSize: '1.1rem', marginBottom: 10, color: '#d4a843' }}>Affordable for Every Family</h5>
+                      <p style={{ opacity: 0.75, fontSize: '0.9rem', lineHeight: 1.75, marginBottom: 10 }}>
+                        We offer competitive and transparent fee structures tailored for each grade level. Contact our admin office for complete details.
+                      </p>
+                    </div>
+
+                    {/* Benefits */}
+                    {[
+                      [faCheckCircle, 'No Hidden Charges'],
+                      [faUsers, 'Sibling Discounts Available'],
+                      [faStar, 'Merit-based Scholarships'],
+                      [faCalendarAlt, 'Flexible Payment Plans'],
+                    ].map(([icon, text]) => (
+                      <div key={text} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 0', borderBottom: '1px solid rgba(255,255,255,0.07)', fontSize: '0.9rem', opacity: 0.85 }}>
+                        <FontAwesomeIcon icon={icon} style={{ width: 14, color: '#d4a843', flexShrink: 0 }} />
+                        {text}
+                      </div>
+                    ))}
+
+                    {/* CTA Button */}
+                    <Link href="/contact" style={{
+                      display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+                      marginTop: 24, padding: '13px',
+                      background: '#d4a843', color: '#0d1b3e',
+                      borderRadius: 8, fontWeight: 700, fontSize: '0.95rem',
+                      textDecoration: 'none', transition: 'all 0.2s',
+                    }}
+                    onMouseEnter={e => { e.currentTarget.style.background = '#e8be5a'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
+                    onMouseLeave={e => { e.currentTarget.style.background = '#d4a843'; e.currentTarget.style.transform = 'none'; }}
+                    >
+                      <FontAwesomeIcon icon={faPhone} style={{ width: 14 }} />
+                      Contact us for Fee Details
+                    </Link>
+
+                    <p style={{ fontSize: '0.75rem', opacity: 0.45, marginTop: 14, textAlign: 'center' }}>
+                      * Need-based financial aid also available. Ask our admin team.
+                    </p>
+                  </div>
               </div>
             </Reveal>
           </div>

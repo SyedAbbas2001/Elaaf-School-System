@@ -389,7 +389,7 @@ export default function HomePage() {
             <div style={{ textAlign: 'center', marginTop: 44 }}>
               <Link href="/academics" style={{
                 display: 'inline-flex', alignItems: 'center', gap: 8,
-                padding: '14px 32px', borderRadius: 10, background: 'var(--navy)', color: 'white',
+                padding: '14px 32px', borderRadius: 10, background: '#1a3a6b', color: 'white',
                 fontWeight: 600, fontSize: '1rem', textDecoration: 'none', transition: 'all 0.2s',
               }}
               onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 10px 30px rgba(13,27,62,0.3)'; }}

@@ -78,6 +78,10 @@ body {
   background-position: center !important;
   background-attachment: fixed !important;
 }
+[data-theme="dark"] .card {
+  --navy: #1e3a5f;
+}
+
 .cta-section {
   background-image: linear-gradient(rgba(194, 21, 29, 0.88), rgba(139, 10, 15, 0.92)), url("../public/campus.jpg") !important;
   background-size: cover !important;
