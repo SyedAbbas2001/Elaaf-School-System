@@ -223,7 +223,7 @@ export default function AdmissionsPage() {
                       <div style={{ position: 'relative' }}>
                         <FontAwesomeIcon icon={faMobileAlt} style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', width: 14, color: 'var(--gray-400)', pointerEvents: 'none' }} />
                         <input
-                          className="form-control" type="tel" required
+                          className="form-control" type="number" required
                           value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })}
                           placeholder="+92 300 XXXXXXX" style={{ paddingLeft: 40 }}
                         />

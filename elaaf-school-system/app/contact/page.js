@@ -172,7 +172,7 @@ export default function ContactPage() {
                         <div style={{ position: 'relative' }}>
                           <FontAwesomeIcon icon={faMobileAlt} style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', width: 13, color: 'var(--gray-400)', pointerEvents: 'none' }} />
                           <input
-                            name="phone" className="form-control"
+                            name="phone" className="form-control" type='number'
                             value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })}
                             placeholder="+92 300 XXXXXXX" style={{ paddingLeft: 40 }}
                           />
