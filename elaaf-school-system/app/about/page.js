@@ -14,6 +14,7 @@ import { stats } from '@/lib/data';
 //   description: 'Learn about Elaaf School System – our history, mission, vision and the team behind quality education in Karachi.',
 // };
 
+
 const teamMembers = [
   { name: 'Ms. Huda Shaikh', role: 'Principal', exp: '10+ Years Experience', initial: 'H', color: '#C2151D' },
   { name: 'Mr. Hameed Shaikh', role: 'Head of Academics', exp: '15+ Years Experience', initial: 'H', color: '#0d1b3e' },

@@ -10,7 +10,7 @@ export const schoolInfo = {
   phone: '0333 2785646',
   email: 'sendtoelaafschool@gmail.com',
   website: 'www.elaafschoolsystem.com',
-  foundedYear: 2010,
+  foundedYear: 2020,
   socialMedia: {
     facebook: 'https://www.facebook.com/ELAAFSCHOOL',
     instagram: 'https://www.instagram.com/elaafschool',
