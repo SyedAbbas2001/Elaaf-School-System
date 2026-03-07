@@ -16,10 +16,10 @@ import { stats } from '@/lib/data';
 
 
 const teamMembers = [
-  { name: 'Ms. Huda Shaikh', role: 'Principal', exp: '10+ Years Experience', initial: 'H', color: '#C2151D' },
-  { name: 'Mr. Hameed Shaikh', role: 'Head of Academics', exp: '15+ Years Experience', initial: 'H', color: '#0d1b3e' },
-  { name: 'Mrs. Kanwal', role: 'Secondary Incharge', exp: '10+ Years Experience', initial: 'K', color: '#d4a843' },
-  { name: 'Mr. Syed M. Abbas', role: 'Head of Computer Science', exp: '10+ Years Experience', initial: 'A', color: '#1a3a6b' },
+  { name: 'Ms. Huda Shaikh', qualification: 'B.Ed.', role: 'Principal', exp: '10+ Years Experience', initial: 'H', color: '#C2151D' },
+  { name: 'Mr. Hameed Shaikh', qualification: 'MBA.', role: 'Head of Academics', exp: '15+ Years Experience', initial: 'H', color: '#0d1b3e' },
+  { name: 'Mrs. Kanwal', qualification: '....', role: 'Secondary Incharge', exp: '10+ Years Experience', initial: 'K', color: '#d4a843' },
+  { name: 'Mr. Syed M. Abbas', qualification: 'Sr. Software Engineer', role: 'Head of Computer Science', exp: '10+ Years Experience', initial: 'A', color: '#1a3a6b' },
  
 ];
 
@@ -210,6 +210,7 @@ export default function AboutPage() {
                     {m.initial}
                   </div>
                   <h4 style={{ fontFamily:'var(--font-display)', marginBottom:6, fontSize:'1.05rem' }}>{m.name}</h4>
+                  <p style={{ fontFamily:'var(--font-display)', marginBottom:2, fontSize:'0.85rem' }}>{m.qualification}</p>
                   <div style={{ color:'var(--crimson)', fontWeight:600, fontSize:'0.88rem', marginBottom:8 }}>{m.role}</div>
                   <div style={{ display:'inline-flex', alignItems:'center', gap:6, padding:'4px 12px', borderRadius:20, background:'var(--gray-100)', fontSize:'0.8rem', color:'var(--gray-600)' }}>
                     <FontAwesomeIcon icon={faStar} style={{ width:10, color:'#d4a843' }} />
