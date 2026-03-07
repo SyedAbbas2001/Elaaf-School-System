@@ -3,7 +3,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
 export const metadata = {
-  title: { default: 'Elaaf School System Karachi', template: '%s | Elaaf School System' },
+  title: { default: 'Elaaf School System', template: '%s | Elaaf School System' },
   description: 'Elaaf School System — Quality Education in Karachi since 2010. Nursery to Matric. Committed to a Better Tomorrow. Admissions open for 2026-27.',
   keywords: [
     'Elaaf School System',
