@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+
 /* Portal styles: built on the site's variables (--navy, --crimson, --cream, --white, --gray-*) */
-.pt-root,.pt-quiz{--pt-navy:#0d1b3e;--pt-navy2:#1a2d5a;font-family:var(--font-body,system-ui,sans-serif);color:var(--navy);background:var(--cream);line-height:1.6}
+.pt-root,.pt-quiz{--pt-navy:#0d1b3e;--pt-navy2:#1a2d5a;font-family:var(--font-body,'Nunito Sans', sans-serif);color:var(--navy);background:var(--cream);line-height:1.6}
 .pt-root *,.pt-quiz *{box-sizing:border-box}
 .pt-root{min-height:80vh}
 .pt-quiz{min-height:100vh}

@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap');
 
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+
 :root {
   --navy: #0d1b3e;
   --navy-light: #1a2d5a;
@@ -14,8 +16,8 @@
   --gray-400: #94a3b8;
   --gray-600: #475569;
   --gray-800: #1e293b;
-  --font-display: 'Poppins', sans-serif;
-  --font-body: 'DM Sans', system-ui, sans-serif;
+  --font-display: 'Nunito Sans', sans-serif;
+  --font-body: 'Nunito Sans', sans-serif;
   --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
   --shadow-md: 0 4px 20px rgba(0,0,0,0.1);
   --shadow-lg: 0 20px 60px rgba(0,0,0,0.15);
@@ -273,3 +275,4 @@ footer a:hover {
   .hide-mobile { display: none !important; }
   .logo-name { display: none !important; }
 }
+
