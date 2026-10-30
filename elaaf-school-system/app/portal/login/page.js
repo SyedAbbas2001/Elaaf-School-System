@@ -10,16 +10,18 @@ export default function LoginPage() {
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
 
-  async function onSubmit(e) {
-    e.preventDefault();
-    setBusy(true);
-    setError("");
-    const res = await signIn("credentials", { email, password, redirect: false });
+async function onSubmit(e) {
+  e.preventDefault();
+  setBusy(true);
+  setError("");
+  const res = await signIn("credentials", { email, password, redirect: false });
+  if (res?.error) {
     setBusy(false);
-    if (res?.error) return setError("Incorrect email or password.");
-    router.push("/portal/dashboard");
-    router.refresh();
+    return setError("Incorrect email or password.");
   }
+  // Full page load so the new session cookie is always picked up
+  window.location.assign("/portal/dashboard");
+}
 
   return (
     <div className="pt-auth">

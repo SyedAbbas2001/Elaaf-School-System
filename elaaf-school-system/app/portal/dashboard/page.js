@@ -23,6 +23,16 @@ export default async function DashboardPage({ searchParams }) {
   const published = quizzes.filter((q) => q.status === "published").length;
   const filtered = Boolean(sp?.className || sp?.subject);
 
+  // Group: class -> subject -> quizzes
+  const byClass = {};
+  for (const q of quizzes) {
+    ((byClass[q.className] ||= {})[q.subject] ||= []).push(q);
+  }
+  const classOrder = [
+    ...CLASSES.filter((c) => byClass[c]),
+    ...Object.keys(byClass).filter((c) => !CLASSES.includes(c)),
+  ];
+
   return (
     <>
       <div className="pt-head">
@@ -56,29 +66,49 @@ export default async function DashboardPage({ searchParams }) {
           {!filtered && <Link className="pt-btn" href="/portal/dashboard/quizzes/new">Create your first quiz</Link>}
         </div>
       ) : (
-        <div className="pt-table-wrap">
-          <table className="pt-table">
-            <thead>
-              <tr><th>Title</th><th>Class</th><th>Subject</th><th>Questions</th><th>Status</th><th>Code</th><th>Actions</th></tr>
-            </thead>
-            <tbody>
-              {quizzes.map((q) => (
-                <tr key={String(q._id)}>
-                  <td><strong>{q.title}</strong></td>
-                  <td>{q.className}</td>
-                  <td>{q.subject}</td>
-                  <td>{q.questions.length}</td>
-                  <td><span className={`pt-badge ${q.status === "published" ? "live" : ""}`}>{q.status === "published" ? "Published" : "Draft"}</span></td>
-                  <td>{q.code}</td>
-                  <td>
-                    <Link href={`/portal/dashboard/quizzes/${q._id}`}>Edit</Link>
-                    <Link href={`/portal/dashboard/quizzes/${q._id}/results`}>Results</Link>
-                  </td>
-                </tr>
+        classOrder.map((cls) => {
+          const subjects = byClass[cls];
+          const count = Object.values(subjects).reduce((n, list) => n + list.length, 0);
+          const subjectOrder = [
+            ...SUBJECTS.filter((s) => subjects[s]),
+            ...Object.keys(subjects).filter((s) => !SUBJECTS.includes(s)),
+          ];
+          return (
+            <details className="pt-group" key={cls} open>
+              <summary>
+                <span>{cls}</span>
+                <span className="pt-pill">{count} {count === 1 ? "quiz" : "quizzes"}</span>
+              </summary>
+
+              {subjectOrder.map((sub) => (
+                <div className="pt-subgroup" key={sub}>
+                  <h3>{sub} <span>{subjects[sub].length}</span></h3>
+                  <div className="pt-table-wrap">
+                    <table className="pt-table">
+                      <thead>
+                        <tr><th>Title</th><th>Questions</th><th>Status</th><th>Code</th><th>Actions</th></tr>
+                      </thead>
+                      <tbody>
+                        {subjects[sub].map((q) => (
+                          <tr key={String(q._id)}>
+                            <td><strong>{q.title}</strong></td>
+                            <td>{q.questions.length}</td>
+                            <td><span className={`pt-badge ${q.status === "published" ? "live" : ""}`}>{q.status === "published" ? "Published" : "Draft"}</span></td>
+                            <td>{q.code}</td>
+                            <td>
+                              <Link href={`/portal/dashboard/quizzes/${q._id}`}>Edit</Link>
+                              <Link href={`/portal/dashboard/quizzes/${q._id}/results`}>Results</Link>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               ))}
-            </tbody>
-          </table>
-        </div>
+            </details>
+          );
+        })
       )}
     </>
   );

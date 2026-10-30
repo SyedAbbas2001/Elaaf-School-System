@@ -5,7 +5,7 @@ import Attempt from "@/lib/models/Attempt";
 
 // Marking happens only on the server; correct answers never reach the student browser
 export async function POST(req) {
-  const { code, studentName, rollNo, className, answers } = await req.json();
+  const { code, studentName, rollNo, className, answers, tabSwitches } = await req.json();
   if (!studentName?.trim() || !rollNo?.trim()) {
     return NextResponse.json({ error: "Enter your name and roll number" }, { status: 400 });
   }
@@ -33,6 +33,7 @@ export async function POST(req) {
     answers: (answers || []).map((a) => (typeof a === "number" ? a : -1)),
     score,
     total,
+    tabSwitches: Math.min(Math.max(Number(tabSwitches) || 0, 0), 50),
   });
   return NextResponse.json({ score, total });
 }

@@ -40,7 +40,7 @@ export default async function ResultsPage({ params }) {
       ) : (
         <div className="pt-table-wrap">
           <table className="pt-table">
-            <thead><tr><th>Roll no</th><th>Student</th><th>Class</th><th>Score</th><th>Percent</th><th>Submitted</th></tr></thead>
+            <thead><tr><th>Roll no</th><th>Student</th><th>Class</th><th>Score</th><th>Percent</th><th>Tab switches</th><th>Submitted</th></tr></thead>
             <tbody>
               {attempts.map((a) => (
                 <tr key={String(a._id)}>
@@ -49,6 +49,7 @@ export default async function ResultsPage({ params }) {
                   <td>{a.className}</td>
                   <td>{a.score} / {a.total}</td>
                   <td>{pct(a)}%</td>
+                  <td>{a.tabSwitches || 0}</td>
                   <td>{new Date(a.createdAt).toLocaleString("en-GB", { timeZone: "Asia/Karachi" })}</td>
                 </tr>
               ))}

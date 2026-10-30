@@ -9,6 +9,7 @@ const AttemptSchema = new mongoose.Schema(
     answers: [Number],
     score: Number,
     total: Number,
+    tabSwitches: { type: Number, default: 0 },
   },
   { timestamps: true }
 );

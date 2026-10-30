@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import "@/app/portal/portal.css";
 
 const LETTERS = ["A", "B", "C", "D", "E", "F"];
+const MAX_SWITCHES = 3; 
 
 export default function QuizTaker({ code, quiz }) {
   const [step, setStep] = useState("info"); // info | quiz | done
@@ -14,6 +15,10 @@ export default function QuizTaker({ code, quiz }) {
   const [busy, setBusy] = useState(false);
   const submitted = useRef(false);
   const latest = useRef();
+  const [warn, setWarn] = useState(false);
+  const [forced, setForced] = useState(false);
+  const switchesRef = useRef(0);
+  const lastHit = useRef(0);
 
   async function submit() {
     if (submitted.current) return;
@@ -22,7 +27,7 @@ export default function QuizTaker({ code, quiz }) {
     const res = await fetch("/api/quiz/submit", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ code, ...info, answers }),
+      body: JSON.stringify({ code, ...info, answers, tabSwitches: switchesRef.current }),
     });
     const data = await res.json();
     setBusy(false);
@@ -48,12 +53,51 @@ export default function QuizTaker({ code, quiz }) {
     if (step === "quiz" && quiz.timeLimitMin && left <= 0) latest.current();
   }, [left, step, quiz.timeLimitMin]);
 
-  function start(e) {
-    e.preventDefault();
-    if (!info.studentName.trim() || !info.rollNo.trim()) return setError("Enter your name and roll number.");
-    setError("");
-    setStep("quiz");
+ useEffect(() => {
+  if (step !== "quiz") return;
+  function hit() {
+    if (submitted.current) return;
+    const now = Date.now();
+    if (now - lastHit.current < 1000) return; // blur and visibilitychange often fire together
+    lastHit.current = now;
+    switchesRef.current += 1;
+    if (switchesRef.current >= MAX_SWITCHES) {
+      setForced(true);
+      latest.current();
+    } else {
+      setWarn(true);
+    }
   }
+  const onVis = () => { if (document.hidden) hit(); };
+  document.addEventListener("visibilitychange", onVis);
+  window.addEventListener("blur", hit);
+  return () => {
+    document.removeEventListener("visibilitychange", onVis);
+    window.removeEventListener("blur", hit);
+  };
+}, [step]);
+
+  async function start(e) {
+  e.preventDefault();
+  if (!info.studentName.trim() || !info.rollNo.trim()) return setError("Enter your name and roll number.");
+  setError("");
+  setBusy(true);
+  try {
+    const res = await fetch("/api/quiz/check", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ code, rollNo: info.rollNo, className: info.className }),
+    });
+    const data = await res.json();
+    if (!res.ok) return setError(data.error || "Something went wrong. Please try again.");
+    if (data.attempted) return setError("You have already attempted this quiz. It can only be taken once.");
+    setStep("quiz");
+  } catch {
+    setError("Network error. Please try again.");
+  } finally {
+    setBusy(false);
+  }
+}
 
   const answered = answers.filter((a) => a !== null).length;
   const total = quiz.questions.length;
@@ -87,7 +131,7 @@ export default function QuizTaker({ code, quiz }) {
               <input id="r" value={info.rollNo} onChange={(e) => setInfo({ ...info, rollNo: e.target.value })} required />
             </div>
             {error && <p className="pt-error" role="alert">{error}</p>}
-            <button className="pt-btn">Start quiz</button>
+            <button className="pt-btn" disabled={busy}>{busy ? "Checking..." : "Start quiz"}</button>
           </form>
         )}
 
@@ -123,11 +167,23 @@ export default function QuizTaker({ code, quiz }) {
         {step === "done" && result && (
           <div className="pt-card pt-done">
             <h2>Answers submitted, {info.studentName}</h2>
+            {forced && <p className="pt-error">Your quiz was submitted automatically because you left the page too many times.</p>}
             <div className="pt-score">{result.score} / {result.total}</div>
             <p className="pt-muted">{percent}% correct. Your teacher can now see your result.</p>
           </div>
         )}
       </div>
+      {warn && step === "quiz" && (
+  <div className="pt-overlay" role="alertdialog" aria-modal="true" aria-labelledby="warn-title">
+    <div className="pt-modal">
+      <h2 id="warn-title">You left the quiz page</h2>
+      <p>
+        Warning {switchesRef.current} of {MAX_SWITCHES}. If you leave the page {MAX_SWITCHES} times, your quiz is submitted automatically. Your timer is still running.
+      </p>
+      <button className="pt-btn" onClick={() => setWarn(false)}>Return to quiz</button>
+    </div>
+  </div>
+)}
     </div>
   );
 }
