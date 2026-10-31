@@ -77,17 +77,12 @@ export default function Navbar() {
           {/* Logo */}
           <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             <div style={{
-              width: 44, height: 44, borderRadius: '50%', background: 'white',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              border: `2px solid ${dark ? 'rgba(255,255,255,0.15)' : '#e2e8f0'}`,
-              overflow: 'hidden',
+              width: 160,marginTop: 5, height: 120, display: 'flex', alignItems: 'center', justifyContent: 'center',
+              
             }}>
-              <img src="/logo-elaaf.png" alt="ESS Logo" style={{ width: '85%' }} />
+              <img src="/Elaaf-School-System-Logo.png" alt="ESS Logo" style={{ width: '85%' }} />
             </div>
-            <div className='logo-name'>
-              <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: '1rem', color: dark ? 'white' : '#0d1b3e', lineHeight: 1.1 ,marginTop: 4 }}>Elaaf School</div>
-              <div style={{ fontSize: '0.85rem', color: 'var(--crimson)', fontWeight: 600, letterSpacing: '0.05em' }}>SYSTEM</div>
-            </div>
+            
           </Link>
 
           {/* Desktop Nav */}
