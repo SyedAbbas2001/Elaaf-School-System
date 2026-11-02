@@ -77,7 +77,7 @@ export default function Navbar() {
           {/* Logo */}
           <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             <div style={{
-              width: 160,marginTop: 5, height: 120, display: 'flex', alignItems: 'center', justifyContent: 'center',
+              width: 160,marginTop: 5, height: 120, display: 'flex', alignItems: 'center',
               
             }}>
               <img src="/Elaaf-School-System-Logo.png" alt="ESS Logo" style={{ width: '85%' }} />
