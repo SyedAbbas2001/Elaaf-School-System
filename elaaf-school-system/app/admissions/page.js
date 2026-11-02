@@ -109,7 +109,7 @@ export default function AdmissionsPage() {
           <h1 style={{ fontSize: 'clamp(2.5rem,5vw,4rem)', fontFamily: 'var(--font-display)', marginBottom: 16, lineHeight: 1.1 }}>Admissions Open</h1>
           <p style={{ fontSize: '1.1rem', opacity: 0.85, maxWidth: 560, margin: '0 auto 32px' }}>Begin your child's journey to excellence. Seats are limited — apply early to secure enrollment.</p>
           <div style={{ display: 'flex', gap: 24, justifyContent: 'center', flexWrap: 'wrap' }}>
-            {[['🏫', 'Nursery to Grade 10'], ['👥', 'Limited Seats'], ['📅', 'Apply Before March 26']].map(([icon, label]) => (
+            {[[ 'Nursery to Grade 10'], [ 'Limited Seats'], [ 'Apply Before March 26']].map(([icon, label]) => (
               <div key={label} style={{ display: 'flex', alignItems: 'center', gap: 8, background: 'rgba(255,255,255,0.1)', backdropFilter: 'blur(10px)', padding: '8px 16px', borderRadius: 20, fontSize: '0.88rem', border: '1px solid rgba(255,255,255,0.15)' }}>
                 <span>{icon}</span><span style={{ opacity: 0.9 }}>{label}</span>
               </div>
