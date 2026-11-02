@@ -145,10 +145,10 @@ export default function QuizTaker({ code, quiz }) {
 
             {quiz.questions.map((q, i) => (
               <fieldset className="pt-card" key={i} style={{ margin: "0 0 14px" }}>
-                <legend className="pt-qtext" style={{ padding: 0 }}>
+                <div className="pt-qtext" style={{ padding: 0 }}>
                   <span>{i + 1}.</span>
                   <span>{q.text}</span>
-                </legend>
+                </div>
                 {q.options.map((o, k) => (
                   <label className="pt-choice" key={k}>
                     <input type="radio" name={`q${i}`} checked={answers[i] === k} onChange={() => setAnswers(answers.map((a, j) => (j === i ? k : a)))} />
