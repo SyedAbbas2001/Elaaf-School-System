@@ -8,7 +8,7 @@ export default function PortalNav() {
   const newActive = p === "/portal/dashboard/quizzes/new";
   return (
     <nav className="pt-nav" aria-label="Portal">
-      <Link href="/portal/dashboard" className={listActive ? "active" : ""}>My quizzes</Link>
+      <Link href="/portal/dashboard" className={listActive ? "active" : ""}>All quizzes</Link>
       <Link href="/portal/dashboard/quizzes/new" className={newActive ? "active" : ""}>Create quiz</Link>
     </nav>
   );
