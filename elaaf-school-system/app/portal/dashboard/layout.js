@@ -12,7 +12,7 @@ export default async function DashboardLayout({ children }) {
     <div className="pt-shell">
       <aside className="pt-side">
         <div className="pt-brand">
-          <strong>Elaaf School</strong>
+          <strong>Elaaf School System</strong>
           <span>Teacher portal</span>
         </div>
         <PortalNav />

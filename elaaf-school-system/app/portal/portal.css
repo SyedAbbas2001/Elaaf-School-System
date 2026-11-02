@@ -113,7 +113,7 @@
   .pt-shell{grid-template-columns:minmax(0,1fr)}
   .pt-side{padding:14px}
   .pt-brand{border:0;margin:0;padding:0 6px 8px}
-  .pt-nav{flex-direction:row;flex-wrap:wrap;flex:none}
+  .pt-nav{flex-direction:row;flex-wrap:wrap;flex:none; flex-flow: column;}
   .pt-nav a,.pt-side button{width:auto;border-left:0;border-bottom:3px solid transparent}
   .pt-nav a.active{border-bottom-color:var(--crimson)}
   .pt-user{display:none}
