@@ -55,6 +55,7 @@
 .pt-cell.on{background:#16a34a;color:#fff;font-weight:700}
 .pt-strip-note{margin-top:12px;font-size:.86rem;color:var(--gray-600)}
 
+
 @media (max-width:420px){.pt-cell{font-size:.58rem;border-radius:4px}.pt-vbars{gap:3px}.pt-vval{font-size:.62rem}.pt-vlab{font-size:.62rem}}
 @media (prefers-reduced-motion:reduce){
   .pt-rise,.pt-vbar,.pt-hfill,.pt-area,.pt-d-val,.pt-cell{animation:none!important}
