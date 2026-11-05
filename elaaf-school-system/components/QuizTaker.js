@@ -109,7 +109,7 @@ export default function QuizTaker({ code, quiz }) {
     <div className="pt-quiz">
       <header className="pt-hero">
         <div className="pt-wrap">
-          <p className="pt-school">Elaaf School</p>
+          <p className="pt-school">Elaaf School System</p>
           <h1>{quiz.title}</h1>
           <span className="pt-chip">{quiz.className}</span>
           <span className="pt-chip">{quiz.subject}</span>

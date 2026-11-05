@@ -41,7 +41,7 @@ export default function QuizEditor({ quiz }) {
     if (!confirm("Delete this quiz and all of its results? This cannot be undone.")) return;
     const res = await fetch(`/api/quizzes/${quiz.id}`, { method: "DELETE" });
     if (res.ok) {
-      router.push("/portal/dashboard");
+      router.push("/portal/dashboard/quizzes");
       router.refresh();
     }
   }

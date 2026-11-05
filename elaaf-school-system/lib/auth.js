@@ -4,7 +4,8 @@ import { connectDB } from "@/lib/mongodb";
 import User from "@/lib/models/User";
 
 export const authOptions = {
-  session: { strategy: "jwt" },
+  // 12 hours: a deactivated account stops working at the latest when its session expires
+  session: { strategy: "jwt", maxAge: 60 * 60 * 12 },
   pages: { signIn: "/portal/login" },
   providers: [
     CredentialsProvider({
@@ -14,7 +15,7 @@ export const authOptions = {
         if (!c?.email || !c?.password) return null;
         await connectDB();
         const user = await User.findOne({ email: c.email.toLowerCase().trim() });
-        if (!user) return null;
+        if (!user || user.active === false) return null;
         const ok = await bcrypt.compare(c.password, user.passwordHash);
         if (!ok) return null;
         return { id: user._id.toString(), name: user.name, email: user.email, role: user.role };

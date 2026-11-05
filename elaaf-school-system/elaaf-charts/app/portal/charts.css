@@ -1,0 +1,63 @@
+/* Dashboard charts and animations (no chart library, pure SVG and CSS) */
+@keyframes pt-rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes pt-grow{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@keyframes pt-growx{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes pt-draw{to{stroke-dashoffset:0}}
+@keyframes pt-fade{from{opacity:0}to{opacity:1}}
+@keyframes pt-donut{from{stroke-dasharray:0 var(--c)}to{stroke-dasharray:var(--d) var(--c)}}
+@keyframes pt-pop{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:none}}
+
+.pt-rise{animation:pt-rise .55s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--i,0)*70ms)}
+.pt-stat{transition:transform .2s,box-shadow .2s}
+.pt-stat:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
+
+.pt-charts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:16px;margin-bottom:16px}
+.pt-chart{margin-bottom:0}
+.pt-chart .pt-hint{margin:-4px 0 14px}
+.pt-chart-empty{padding:28px 0;text-align:center}
+
+/* vertical bars */
+.pt-vbars{display:flex;gap:6px;align-items:flex-end}
+.pt-vcol{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:4px}
+.pt-vval{font-size:.72rem;color:var(--gray-600);height:14px;line-height:14px}
+.pt-vtrack{width:100%;height:130px;display:flex;align-items:flex-end;justify-content:center}
+.pt-vbar{width:70%;max-width:26px;background:linear-gradient(180deg,var(--crimson),#8f0f15);border-radius:5px 5px 0 0;transform-origin:bottom;animation:pt-grow .7s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i,0)*45ms + 150ms)}
+.pt-vlab{font-size:.72rem;color:var(--gray-600)}
+
+/* horizontal bars */
+.pt-hbars{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:13px}
+.pt-hbars li{display:grid;grid-template-columns:minmax(70px,32%) 1fr auto;gap:10px;align-items:center;font-size:.88rem}
+.pt-hlab{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pt-htrack{height:10px;background:var(--gray-200);border-radius:99px;overflow:hidden}
+.pt-hfill{height:100%;background:linear-gradient(90deg,#0f6b5c,#16a34a);border-radius:99px;transform-origin:left;animation:pt-growx .8s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i,0)*80ms + 150ms)}
+.pt-hbars.crimson .pt-hfill{background:linear-gradient(90deg,#8f0f15,var(--crimson))}
+.pt-hval{color:var(--gray-600);font-variant-numeric:tabular-nums;white-space:nowrap}
+
+/* line chart */
+.pt-line svg{width:100%;height:auto;display:block}
+.pt-line-max{text-align:right;font-size:.76rem;color:var(--gray-600);margin-bottom:2px}
+.pt-grid{stroke:var(--gray-200);stroke-width:1}
+.pt-area{fill:rgba(194,21,29,.12);animation:pt-fade .8s .5s both}
+.pt-stroke{fill:none;stroke:var(--crimson);stroke-width:3;stroke-linejoin:round;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;animation:pt-draw 1.3s ease .1s forwards}
+.pt-line-x{display:flex;justify-content:space-between;font-size:.76rem;color:var(--gray-600);margin-top:6px}
+
+/* donut */
+.pt-donut{position:relative;width:140px;height:140px;margin:4px auto 0}
+.pt-d-track{fill:none;stroke:var(--gray-200);stroke-width:12}
+.pt-d-val{fill:none;stroke:var(--crimson);stroke-width:12;stroke-linecap:round;stroke-dasharray:var(--d) var(--c);animation:pt-donut 1.2s cubic-bezier(.2,.8,.2,1) .2s both}
+.pt-d-center{position:absolute;inset:0;display:grid;place-content:center;text-align:center}
+.pt-d-center b{font-family:var(--font-display,inherit);font-size:1.7rem;line-height:1.1;color:var(--navy)}
+.pt-d-center span{font-size:.76rem;color:var(--gray-600)}
+
+/* day strip */
+.pt-strip{display:grid;grid-template-columns:repeat(14,minmax(0,1fr));gap:4px}
+.pt-cell{aspect-ratio:1;min-width:0;overflow:hidden;border-radius:6px;background:var(--gray-200);display:grid;place-items:center;font-size:.7rem;color:var(--gray-600);animation:pt-pop .4s both;animation-delay:calc(var(--i,0)*35ms + 100ms)}
+.pt-cell.on{background:#16a34a;color:#fff;font-weight:700}
+.pt-strip-note{margin-top:12px;font-size:.86rem;color:var(--gray-600)}
+
+@media (max-width:420px){.pt-cell{font-size:.58rem;border-radius:4px}.pt-vbars{gap:3px}.pt-vval{font-size:.62rem}.pt-vlab{font-size:.62rem}}
+@media (prefers-reduced-motion:reduce){
+  .pt-rise,.pt-vbar,.pt-hfill,.pt-area,.pt-d-val,.pt-cell{animation:none!important}
+  .pt-stroke{animation:none!important;stroke-dashoffset:0}
+  .pt-stat{transition:none}
+}
