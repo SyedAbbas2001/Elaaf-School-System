@@ -5,6 +5,7 @@ import { connectDB } from "@/lib/mongodb";
 import Quiz from "@/lib/models/Quiz";
 import Attempt from "@/lib/models/Attempt";
 import { CLASSES, SUBJECTS } from "@/lib/constants";
+import User from "@/lib/models/User";
 
 export const dynamic = "force-dynamic";
 
@@ -23,6 +24,12 @@ export default async function QuizzesPage({ searchParams }) {
   const published = quizzes.filter((q) => q.status === "published").length;
   const filtered = Boolean(sp?.className || sp?.subject);
   const admin = session.user.role === "admin";
+
+  let nameOf = {};
+if (admin) {
+  const users = await User.find().select("name email").lean();
+  nameOf = Object.fromEntries(users.map((u) => [String(u._id), u.name || u.email]));
+}
 
   // Group: class -> subject -> quizzes
   const byClass = {};
@@ -87,12 +94,13 @@ export default async function QuizzesPage({ searchParams }) {
                   <div className="pt-table-wrap">
                     <table className="pt-table">
                       <thead>
-                        <tr><th>Title</th><th>Questions</th><th>Status</th><th>Code</th><th>Actions</th></tr>
+                        <tr><th>Title</th>{admin && <th>Teacher</th>}<th>Questions</th><th>Status</th><th>Code</th><th>Actions</th></tr>
                       </thead>
                       <tbody>
                         {subjects[sub].map((q) => (
                           <tr key={String(q._id)}>
                             <td><strong>{q.title}</strong></td>
+                            {admin && <td>{nameOf[String(q.teacher)] || "Unknown"}</td>}
                             <td>{q.questions.length}</td>
                             <td><span className={`pt-badge ${q.status === "published" ? "live" : ""}`}>{q.status === "published" ? "Published" : "Draft"}</span></td>
                             <td>{q.code}</td>

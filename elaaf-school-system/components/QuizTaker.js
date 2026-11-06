@@ -3,6 +3,8 @@ import { useEffect, useRef, useState } from "react";
 import "@/app/portal/portal.css";
 
 const LETTERS = ["A", "B", "C", "D", "E", "F"];
+const CONFETTI_AT = 80; 
+const EXCELLENT_AT = 90; 
 const MAX_SWITCHES = 3; 
 
 export default function QuizTaker({ code, quiz }) {
@@ -76,6 +78,23 @@ export default function QuizTaker({ code, quiz }) {
     window.removeEventListener("blur", hit);
   };
 }, [step]);
+
+useEffect(() => {
+  if (step !== "done" || !result || !result.total) return;
+  if ((result.score / result.total) * 100 < CONFETTI_AT) return;
+  let stopped = false;
+  import("canvas-confetti").then(({ default: confetti }) => {
+    if (stopped) return;
+    const end = Date.now() + 1800;
+    const colors = ["#C2151D", "#d4a843", "#0d1b3e", "#16a34a"];
+    (function frame() {
+      confetti({ particleCount: 4, angle: 60, spread: 60, origin: { x: 0, y: 0.7 }, colors, disableForReducedMotion: true });
+      confetti({ particleCount: 4, angle: 120, spread: 60, origin: { x: 1, y: 0.7 }, colors, disableForReducedMotion: true });
+      if (Date.now() < end && !stopped) requestAnimationFrame(frame);
+    })();
+  });
+  return () => { stopped = true; };
+}, [step, result]);
 
   async function start(e) {
   e.preventDefault();
@@ -169,6 +188,11 @@ export default function QuizTaker({ code, quiz }) {
             <h2>Answers submitted, {info.studentName}</h2>
             {forced && <p className="pt-error">Your quiz was submitted automatically because you left the page too many times.</p>}
             <div className="pt-score">{result.score} / {result.total}</div>
+           {percent >= EXCELLENT_AT ? (
+          <p className="pt-ok" style={{ fontSize: "1.1rem" }}>Excellent work!</p>
+        ) : percent >= CONFETTI_AT ? (
+          <p className="pt-ok" style={{ fontSize: "1.1rem" }}>Good work!</p>
+        ) : null}
             <p className="pt-muted">{percent}% correct. Your teacher can now see your result.</p>
           </div>
         )}
