@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faSearch, faMoon, faSun, faBars, faTimes, faGraduationCap,
   faHome, faInfoCircle, faBook, faClipboardList, faCalendarAlt,
-  faImages, faPhone, faTimes as faClose,
+  faImages, faPhone, faUserCircle, faTimes as faClose,
 } from '@fortawesome/free-solid-svg-icons';
 
 // Map nav labels to icons
@@ -27,8 +27,19 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [loggedIn, setLoggedIn] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
+
+  // Logged in teachers/admins see "Portal" instead of "Apply Now"
+  useEffect(() => {
+    let cancelled = false;
+    fetch('/api/auth/session')
+      .then((r) => (r.ok ? r.json() : {}))
+      .then((s) => { if (!cancelled) setLoggedIn(Boolean(s && s.user)); })
+      .catch(() => { if (!cancelled) setLoggedIn(false); });
+    return () => { cancelled = true; };
+  }, [pathname]);
 
   // Dark mode init
   useEffect(() => {
@@ -77,12 +88,10 @@ export default function Navbar() {
           {/* Logo */}
           <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             <div style={{
-              width: 160,marginTop: 5, height: 120, display: 'flex', alignItems: 'center',
-              
+              width: 160, marginTop: 5, height: 120, display: 'flex', alignItems: 'center',
             }}>
               <img src="/Elaaf-School-System-Logo.png" alt="ESS Logo" style={{ width: '85%' }} />
             </div>
-            
           </Link>
 
           {/* Desktop Nav */}
@@ -133,16 +142,16 @@ export default function Navbar() {
               <FontAwesomeIcon icon={dark ? faSun : faMoon} style={{ width: 14, height: 14 }} />
             </button>
 
-            {/* Apply Now */}
-            <Link href="/admissions" className="nav-apply" style={{
+            {/* Apply Now (becomes Portal when logged in) */}
+            <Link href={loggedIn ? '/portal/dashboard' : '/admissions'} className="nav-apply" style={{
               padding: '9px 18px', borderRadius: 8,
               background: 'var(--crimson)', color: 'white',
               fontSize: '0.85rem', fontWeight: 600,
               display: 'flex', alignItems: 'center', gap: 6,
               transition: 'all 0.2s', textDecoration: 'none',
             }}>
-              <FontAwesomeIcon icon={faGraduationCap} style={{ width: 13, height: 13 }} />
-              Apply Now
+              <FontAwesomeIcon icon={loggedIn ? faUserCircle : faGraduationCap} style={{ width: 13, height: 13 }} />
+              {loggedIn ? 'Portal' : 'Apply Now'}
             </Link>
 
             {/* Mobile hamburger */}
@@ -213,14 +222,14 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
-            <Link href="/admissions" onClick={() => setMenuOpen(false)} style={{
+            <Link href={loggedIn ? '/portal/dashboard' : '/admissions'} onClick={() => setMenuOpen(false)} style={{
               display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
               marginTop: 16, padding: '13px',
               background: 'var(--crimson)', color: 'white',
               borderRadius: 8, fontWeight: 600, textDecoration: 'none',
             }}>
-              <FontAwesomeIcon icon={faGraduationCap} style={{ width: 14, height: 14 }} />
-              Apply Now
+              <FontAwesomeIcon icon={loggedIn ? faUserCircle : faGraduationCap} style={{ width: 14, height: 14 }} />
+              {loggedIn ? 'Portal' : 'Apply Now'}
             </Link>
           </div>
         )}
