@@ -13,25 +13,43 @@ export default function PortalSidebar({ children }) {
   // close the drawer after moving to another page
   useEffect(() => setOpen(false), [pathname]);
 
-  useEffect(() => {
-    if (!open) {
-      if (wasOpen.current) openBtn.current?.focus();
-      wasOpen.current = false;
-      return;
+ useEffect(() => {
+  if (!open) {
+    if (wasOpen.current) openBtn.current?.focus();
+    wasOpen.current = false;
+    return;
+  }
+  wasOpen.current = true;
+  const onKey = (e) => {
+    if (e.key === "Escape") setOpen(false);
+  };
+  document.addEventListener("keydown", onKey);
+
+  // lock the page behind the drawer (html and body, plus the fixed-body trick for iPhones)
+  const mobile = window.matchMedia("(max-width: 820px)").matches;
+  const y = window.scrollY;
+  const html = document.documentElement;
+  const body = document.body;
+  const saved = { h: html.style.overflow, b: body.style.cssText };
+  if (mobile) {
+    html.style.overflow = "hidden";
+    body.style.overflow = "hidden";
+    body.style.position = "fixed";
+    body.style.top = `-${y}px`;
+    body.style.left = "0";
+    body.style.right = "0";
+  }
+  closeBtn.current?.focus();
+
+  return () => {
+    document.removeEventListener("keydown", onKey);
+    if (mobile) {
+      html.style.overflow = saved.h;
+      body.style.cssText = saved.b;
+      window.scrollTo({ top: y, behavior: "instant" });
     }
-    wasOpen.current = true;
-    const onKey = (e) => {
-      if (e.key === "Escape") setOpen(false);
-    };
-    document.addEventListener("keydown", onKey);
-    const prev = document.body.style.overflow;
-    if (window.matchMedia("(max-width: 820px)").matches) document.body.style.overflow = "hidden";
-    closeBtn.current?.focus();
-    return () => {
-      document.removeEventListener("keydown", onKey);
-      document.body.style.overflow = prev;
-    };
-  }, [open]);
+  };
+}, [open]);
 
   return (
     <aside className={`pt-side ${open ? "open" : ""}`}>
