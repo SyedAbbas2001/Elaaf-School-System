@@ -1,0 +1,52 @@
+/* Sidebar wrapper, plus the slide-in drawer menu on phones */
+.pt-menu{display:flex;flex-direction:column;flex:1;gap:4px}
+.pt-brand{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.pt-side .pt-menu-btn,.pt-side .pt-close-btn,.pt-backdrop,.pt-drawer-head{display:none}
+
+@keyframes pt-slidein{from{opacity:0;transform:translateX(-16px)}to{opacity:1;transform:none}}
+
+@media (max-width:820px){
+  .pt-shell{grid-template-rows:auto 1fr}
+  .pt-side{padding:10px 14px;gap:0}
+  .pt-brand{align-items:center;padding:0;margin:0;border:0}
+
+  /* top bar button */
+  .pt-side .pt-menu-btn{display:inline-flex;width:auto;align-items:center;gap:10px;padding:8px 14px;border:1px solid rgba(255,255,255,.4);border-radius:6px;background:transparent;color:#fff;font:inherit;font-size:.9rem;font-weight:600;cursor:pointer}
+  .pt-side .pt-menu-btn:hover{background:rgba(255,255,255,.1)}
+  .pt-burger{display:inline-flex;flex-direction:column;gap:4px;width:18px}
+  .pt-burger i{display:block;height:2px;background:#fff;border-radius:2px}
+
+  /* dark overlay behind the drawer */
+  .pt-backdrop{display:block;position:fixed;inset:0;background:rgba(7,14,34,.55);opacity:0;pointer-events:none;transition:opacity .3s ease;z-index:1150}
+  .pt-side.open .pt-backdrop{opacity:1;pointer-events:auto}
+
+  /* the drawer itself */
+  .pt-side .pt-menu{position:fixed;top:0;left:0;bottom:0;width:min(84vw,300px);flex:none;overflow-y:auto;background:#0d1b3e;padding:16px 14px 24px;z-index:1200;box-shadow:8px 0 30px rgba(0,0,0,.35);transform:translateX(-102%);visibility:hidden;transition:transform .32s cubic-bezier(.22,.8,.24,1),visibility 0s linear .32s}
+  .pt-side.open .pt-menu{transform:none;visibility:visible;transition:transform .32s cubic-bezier(.22,.8,.24,1),visibility 0s}
+  .pt-drawer-head{display:flex;align-items:flex-start;justify-content:space-between;padding:0 6px 14px;margin-bottom:10px;border-bottom:1px solid rgba(255,255,255,.14)}
+  .pt-drawer-head strong{display:block;font-family:var(--font-display,inherit);font-size:1.1rem;color:#fff}
+  .pt-drawer-head span{font-size:.84rem;color:#aab7d4}
+  .pt-side .pt-close-btn{display:inline-grid;place-items:center;flex:none;width:36px;height:36px;padding:0;font-size:1.6rem;line-height:1;border-radius:6px;background:rgba(255,255,255,.08);color:#fff;cursor:pointer}
+
+  /* links inside the drawer: a vertical list */
+  .pt-side .pt-menu .pt-nav{flex-direction:column;flex:none}
+  .pt-side .pt-menu .pt-nav a,.pt-side .pt-menu>button{width:100%;border-bottom:0;border-left:3px solid transparent}
+  .pt-side .pt-menu .pt-nav a.active{border-bottom:0;border-left-color:var(--crimson)}
+  .pt-side .pt-menu .pt-user{display:block;margin-top:12px}
+
+  /* links glide in one after another when the drawer opens */
+  .pt-side.open .pt-nav>*{animation:pt-slidein .4s cubic-bezier(.22,.8,.24,1) both}
+  .pt-side.open .pt-nav>*:nth-child(1){animation-delay:.08s}
+  .pt-side.open .pt-nav>*:nth-child(2){animation-delay:.12s}
+  .pt-side.open .pt-nav>*:nth-child(3){animation-delay:.16s}
+  .pt-side.open .pt-nav>*:nth-child(4){animation-delay:.20s}
+  .pt-side.open .pt-nav>*:nth-child(5){animation-delay:.24s}
+  .pt-side.open .pt-nav>*:nth-child(6){animation-delay:.28s}
+  .pt-side.open .pt-nav>*:nth-child(7){animation-delay:.32s}
+  .pt-side.open .pt-nav>*:nth-child(8){animation-delay:.36s}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .pt-backdrop,.pt-side .pt-menu,.pt-side.open .pt-menu{transition:none}
+  .pt-side.open .pt-nav>*{animation:none}
+}
