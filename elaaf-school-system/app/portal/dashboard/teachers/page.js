@@ -5,6 +5,7 @@ import User from "@/lib/models/User";
 import TeacherForm from "@/components/portal/TeacherForm";
 import TeacherActions from "@/components/portal/TeacherActions";
 import { TZ } from "@/lib/dates";
+import { ago } from "@/lib/timeago";
 
 export const dynamic = "force-dynamic";
 
@@ -25,7 +26,7 @@ export default async function TeachersPage() {
 
       <div className="pt-table-wrap" style={{ marginTop: 20 }}>
         <table className="pt-table">
-          <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Status</th><th>Created</th><th>Actions</th></tr></thead>
+          <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Status</th><th>Last login</th><th>Created</th><th>Actions</th></tr></thead>
           <tbody>
             {users.map((u) => (
               <tr key={String(u._id)}>
@@ -33,6 +34,7 @@ export default async function TeachersPage() {
                 <td>{u.email}</td>
                 <td>{u.role === "admin" ? "Admin" : "Teacher"}</td>
                 <td><span className={`pt-badge ${u.active === false ? "" : "live"}`}>{u.active === false ? "Deactivated" : "Active"}</span></td>
+                <td>{u.lastLoginAt ? ago(u.lastLoginAt) : <span className="pt-muted">Not recorded yet</span>}</td>
                 <td>{new Date(u.createdAt).toLocaleDateString("en-GB", { timeZone: TZ })}</td>
                 <td>
                   <TeacherActions user={{ id: String(u._id), name: u.name || u.email, active: u.active !== false, isSelf: String(u._id) === session.user.id }} />

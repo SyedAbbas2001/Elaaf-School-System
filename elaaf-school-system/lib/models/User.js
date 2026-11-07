@@ -7,6 +7,7 @@ const UserSchema = new mongoose.Schema(
     passwordHash: { type: String, required: true },
     role: { type: String, enum: ["admin", "teacher"], default: "teacher" },
     active: { type: Boolean, default: true },
+    lastLoginAt: Date,
   },
   { timestamps: true }
 );

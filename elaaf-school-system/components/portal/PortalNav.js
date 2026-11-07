@@ -19,6 +19,7 @@ export default function PortalNav({ role }) {
           <Link href="/portal/dashboard/diary/all" className={cls(p === "/portal/dashboard/diary/all")}>All diaries</Link>
           <Link href="/portal/dashboard/diary/checklist" className={cls(p === "/portal/dashboard/diary/checklist")}>Monthly checklist</Link>
           <Link href="/portal/dashboard/teachers" className={cls(p.startsWith("/portal/dashboard/teachers"))}>Teachers</Link>
+          <Link href="/portal/dashboard/logins" className={cls(p === "/portal/dashboard/logins")}>Login activity</Link>
         </>
       )}
     </nav>

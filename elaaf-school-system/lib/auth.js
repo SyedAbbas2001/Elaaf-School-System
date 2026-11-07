@@ -2,6 +2,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import { connectDB } from "@/lib/mongodb";
 import User from "@/lib/models/User";
+import LoginLog from "@/lib/models/LoginLog";
 
 export const authOptions = {
   // 12 hours: a deactivated account stops working at the latest when its session expires
@@ -18,6 +19,15 @@ export const authOptions = {
         if (!user || user.active === false) return null;
         const ok = await bcrypt.compare(c.password, user.passwordHash);
         if (!ok) return null;
+
+        // Record the sign in. A logging problem must never stop someone from signing in.
+        try {
+          await User.updateOne({ _id: user._id }, { $set: { lastLoginAt: new Date() } });
+          await LoginLog.create({ user: user._id, name: user.name, email: user.email, role: user.role });
+        } catch (e) {
+          console.error("Could not record login", e);
+        }
+
         return { id: user._id.toString(), name: user.name, email: user.email, role: user.role };
       },
     }),
