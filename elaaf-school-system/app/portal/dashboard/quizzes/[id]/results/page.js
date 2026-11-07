@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getOwnedQuiz } from "@/lib/quizAccess";
 import Attempt from "@/lib/models/Attempt";
+import PrintButton from "@/components/portal/PrintButton";
 
 export const dynamic = "force-dynamic";
 
@@ -30,9 +31,17 @@ export default async function ResultsPage({ params }) {
         <div className="pt-stat"><b>{top}%</b><span>Highest score</span></div>
       </div>
 
-      <div className="pt-row" style={{ marginBottom: 16 }}>
+      <div className="pt-row pt-noprint" style={{ marginBottom: 16 }}>
         <a className="pt-btn" href={`/api/quizzes/${id}/export`}>Download CSV</a>
+        <PrintButton />
         <Link className="pt-btn alt" href={`/portal/dashboard/quizzes/${id}`}>Edit quiz</Link>
+      </div>
+
+      {/* Shown only on the printed page */}
+      <div className="pt-printonly pt-print-results">
+        <h2>{quiz.title}</h2>
+        <p>{quiz.className}, {quiz.subject}</p>
+        <p>{attempts.length} submissions, average {avg}%, highest {top}%</p>
       </div>
 
       {attempts.length === 0 ? (
@@ -40,7 +49,13 @@ export default async function ResultsPage({ params }) {
       ) : (
         <div className="pt-table-wrap">
           <table className="pt-table">
-            <thead><tr><th>Roll no</th><th>Student</th><th>Class</th><th>Score</th><th>Percent</th><th>Tab switches</th><th>Submitted</th></tr></thead>
+            <thead>
+              <tr>
+                <th>Roll no</th><th>Student</th><th>Class</th><th>Score</th><th>Percent</th>
+                <th className="pt-noprint">Tab switches</th>
+                <th>Submitted</th>
+              </tr>
+            </thead>
             <tbody>
               {attempts.map((a) => (
                 <tr key={String(a._id)}>
@@ -49,7 +64,7 @@ export default async function ResultsPage({ params }) {
                   <td>{a.className}</td>
                   <td>{a.score} / {a.total}</td>
                   <td>{pct(a)}%</td>
-                  <td>{a.tabSwitches || 0}</td>
+                  <td className="pt-noprint">{a.tabSwitches || 0}</td>
                   <td>{new Date(a.createdAt).toLocaleString("en-GB", { timeZone: "Asia/Karachi" })}</td>
                 </tr>
               ))}

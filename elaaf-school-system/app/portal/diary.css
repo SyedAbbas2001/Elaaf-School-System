@@ -48,3 +48,10 @@
   .pt-table td,.pt-table th{white-space:normal!important;min-width:0!important;max-width:none!important;font-size:11px;padding:5px 7px;border:1px solid #999;color:#000;background:#fff}
   .pt-table th{background:#eee}
 }
+
+/* Printing quiz results: portrait page, no summary tiles */
+@page results{size:A4 portrait;margin:12mm}
+@media print{
+  body:has(.pt-print-results){page:results}
+  body:has(.pt-printonly) .pt-stats{display:none!important}
+}

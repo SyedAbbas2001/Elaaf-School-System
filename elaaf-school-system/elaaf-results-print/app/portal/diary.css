@@ -1,0 +1,57 @@
+/* Diary, teachers and print styles (adds to portal.css) */
+.pt-nav-label{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:#7f8fb3;padding:16px 12px 4px}
+.pt-root textarea{font:inherit;padding:11px 14px;border:2px solid var(--gray-200);border-radius:8px;background:var(--white);color:var(--navy);width:100%;resize:vertical;min-height:84px;outline:none;transition:border-color .2s}
+.pt-root textarea:focus{border-color:var(--crimson)}
+.pt-grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0 14px}
+.pt-day{margin:24px 0 10px;font-size:1.02rem;color:var(--navy)}
+.pt-entry{background:var(--white);border:1px solid var(--gray-200);border-radius:12px;padding:16px 18px;margin-bottom:10px;box-shadow:var(--shadow-sm)}
+.pt-entry-top{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+.pt-entry-top .grow{flex:1}
+.pt-tag{display:inline-block;background:var(--gray-100);color:var(--navy);padding:3px 11px;border-radius:20px;font-size:.82rem;font-weight:600}
+.pt-tag.crimson{background:rgba(194,21,29,.1);color:var(--crimson)}
+.pt-tag.warn{background:#fef3c7;color:#92400e}
+.pt-chips{display:flex;flex-wrap:wrap;gap:8px}
+.pt-entry dl{display:grid;grid-template-columns:170px 1fr;gap:8px 14px;margin:0}
+.pt-entry dt{color:var(--gray-600);font-size:.86rem}
+.pt-entry dd{margin:0;white-space:pre-wrap;word-break:break-word}
+.pt-remark{margin-top:12px;background:rgba(21,128,61,.09);border-left:3px solid #15803d;padding:8px 12px;border-radius:4px;font-size:.9rem}
+.pt-table td{vertical-align:top}
+.pt-table td.wrap{white-space:normal;min-width:190px;max-width:320px;word-break:break-word}
+.pt-table select{min-width:110px;padding:7px 10px}
+.pt-table .pt-btn{padding:6px 12px;font-size:.85rem}
+.pt-printonly{display:none}
+@media (max-width:600px){.pt-entry dl{grid-template-columns:1fr;gap:2px}.pt-entry dt{margin-top:8px}}
+
+/* Printing "All diaries": only the table, landscape pages, header row repeated on every page */
+@page diary{size:A4 landscape;margin:12mm}
+@media print{
+  body:has(.pt-printonly){page:diary}
+  .pt-side,.pt-noprint{display:none!important}
+  body:has(.pt-shell) nav,
+  body:has(.pt-shell) header,
+  body:has(.pt-shell) footer,
+  body:has(.pt-shell) nav + div:empty,
+  body:has(.pt-shell) div[style*="height:70px"],
+  body:has(.pt-shell) div[style*="height: 70px"]{display:none!important}
+  body:has(.pt-printonly) .pt-head{display:none!important}
+  html,body{background:#fff!important}
+  .pt-printonly{display:block!important;margin:0 0 10px}
+  .pt-printonly h2{font-size:16px;margin:0 0 2px}
+  .pt-printonly p{font-size:12px;margin:0}
+  .pt-shell{display:block}
+  .pt-main{padding:0;max-width:none}
+  .pt-root{background:#fff;color:#000;min-height:0}
+  .pt-table-wrap{border:0;box-shadow:none;overflow:visible;background:#fff;border-radius:0}
+  .pt-table{width:100%}
+  .pt-table thead{display:table-header-group}
+  .pt-table tr{break-inside:avoid;page-break-inside:avoid}
+  .pt-table td,.pt-table th{white-space:normal!important;min-width:0!important;max-width:none!important;font-size:11px;padding:5px 7px;border:1px solid #999;color:#000;background:#fff}
+  .pt-table th{background:#eee}
+}
+
+/* Printing quiz results: portrait page, no summary tiles */
+@page results{size:A4 portrait;margin:12mm}
+@media print{
+  body:has(.pt-print-results){page:results}
+  body:has(.pt-printonly) .pt-stats{display:none!important}
+}
