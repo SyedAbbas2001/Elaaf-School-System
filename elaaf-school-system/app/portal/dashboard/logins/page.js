@@ -8,6 +8,7 @@ import { param } from "@/lib/diaryQuery";
 import { ago, fmtDateTime } from "@/lib/timeago";
 
 export const dynamic = "force-dynamic";
+const LIMIT = 10;
 
 export default async function LoginActivityPage({ searchParams }) {
   if (!(await getAdminSession())) redirect("/portal/dashboard");
@@ -17,9 +18,9 @@ export default async function LoginActivityPage({ searchParams }) {
   await connectDB();
   const users = await User.find().sort({ lastLoginAt: -1, name: 1 }).lean();
   const filter = mongoose.isValidObjectId(who) ? { user: who } : {};
-  const found = await LoginLog.find(filter).sort({ createdAt: -1 }).limit(201).lean();
-  const truncated = found.length > 200;
-  const logs = found.slice(0, 200);
+  const found = await LoginLog.find(filter).sort({ createdAt: -1 }).limit(LIMIT + 1).lean();
+  const truncated = found.length > LIMIT;
+  const logs = found.slice(0, LIMIT);
 
   return (
     <>
@@ -56,7 +57,7 @@ export default async function LoginActivityPage({ searchParams }) {
           </select>
         </div>
         <button className="pt-btn alt">Apply filter</button>
-        <span className="pt-hint">{logs.length} {logs.length === 1 ? "login" : "logins"}{truncated ? ", showing the latest 200" : ""}. Records are kept for one year.</span>
+        <span className="pt-hint">{logs.length} {logs.length === 1 ? "login" : "logins"}{truncated ? `, showing the latest ${LIMIT}` : ""}. Records are kept for one year.</span>
       </form>
 
       {logs.length === 0 ? (
