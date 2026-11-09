@@ -23,13 +23,8 @@ async function onSubmit(e) {
     return setError("Incorrect email or password.");
   }
   await getSession(); 
+  router.refresh();  
   router.replace("/portal/dashboard");
- 
-  setTimeout(() => {
-    if (window.location.pathname.startsWith("/portal/login")) {
-      window.location.assign("/portal/dashboard");
-    }
-  }, 2000);
 }
 
   return (
