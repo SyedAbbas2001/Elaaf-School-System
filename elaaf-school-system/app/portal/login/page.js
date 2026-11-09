@@ -2,6 +2,8 @@
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { getSession } from "next-auth/react";
+
 
 export default function LoginPage() {
   const router = useRouter();
@@ -9,6 +11,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
+  
 
 async function onSubmit(e) {
   e.preventDefault();
@@ -19,15 +22,21 @@ async function onSubmit(e) {
     setBusy(false);
     return setError("Incorrect email or password.");
   }
-  // Full page load so the new session cookie is always picked up
-  window.location.assign("/portal/dashboard");
+  await getSession(); 
+  router.replace("/portal/dashboard");
+ 
+  setTimeout(() => {
+    if (window.location.pathname.startsWith("/portal/login")) {
+      window.location.assign("/portal/dashboard");
+    }
+  }, 2000);
 }
 
   return (
     <div className="pt-auth">
       <form className="pt-auth-card" onSubmit={onSubmit}>
         <h1>Teacher sign in</h1>
-        <p className="pt-sub">Sign in to create and manage quizzes.</p>
+        <p className="pt-sub">Sign in to create and manage your work.</p>
         <div className="pt-field">
           <label htmlFor="email">Email</label>
           <input id="email" type="email" autoComplete="username" value={email} onChange={(e) => setEmail(e.target.value)} required />
