@@ -74,7 +74,7 @@ export default function AcademicsPage() {
                 onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = 'var(--shadow-sm)'; }}
                 >
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 0 }}>
-                    {/* Left colored panel — same colors, icon replaces emoji */}
+                    {/* Left colored panel - same colors, icon replaces emoji */}
                     <div style={{ padding: 40, background: i % 2 === 0 ? 'var(--navy)' : 'var(--crimson)', color: 'white', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                       <div style={{ width: 64, height: 64, borderRadius: 18, background: 'rgba(255,255,255,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 20 }}>
                         <FontAwesomeIcon icon={programIcons[p.level] || faBook} style={{ width: 28, height: 28 }} />
@@ -83,7 +83,7 @@ export default function AcademicsPage() {
                       <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '1.8rem', marginBottom: 12 }}>{p.level}</h3>
                       <p style={{ opacity: 0.85, lineHeight: 1.7 }}>{p.description}</p>
                     </div>
-                    {/* Right panel — same layout, icon replaces ✓ */}
+                    {/* Right panel - same layout, icon replaces ✓ */}
                     <div style={{ padding: 40 }}>
                       <h4 style={{ fontFamily: 'var(--font-display)', marginBottom: 20, fontSize: '1.2rem' }}>Core Subjects</h4>
                       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, marginBottom: 24 }}>

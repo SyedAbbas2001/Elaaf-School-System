@@ -1,5 +1,5 @@
 // ============================================
-// lib/data.js — Central data for the website
+// lib/data.js - Central data for the website
 // Edit this file to customize content easily
 // ============================================
 

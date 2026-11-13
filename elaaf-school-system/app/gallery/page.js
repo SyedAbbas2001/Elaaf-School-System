@@ -41,7 +41,7 @@ export default function GalleryPage() {
             <FontAwesomeIcon icon={faImages} style={{ width: 12 }} /> Campus Life
           </div>
           <h1 style={{ fontSize: 'clamp(2.5rem,5vw,4rem)', fontFamily: 'var(--font-display)', marginBottom: 16 }}>Photo Gallery</h1>
-          <p style={{ fontSize: '1.1rem', opacity: 0.85, maxWidth: 560, margin: '0 auto' }}>A glimpse into the vibrant life at Elaaf School System — from classrooms to the sports field.</p>
+          <p style={{ fontSize: '1.1rem', opacity: 0.85, maxWidth: 560, margin: '0 auto' }}>A glimpse into the vibrant life at Elaaf School System - from classrooms to the sports field.</p>
         </div>
       </div>
 

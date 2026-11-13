@@ -1,6 +1,6 @@
 export const metadata = {
   title: 'Events & News',
-  description: 'Stay updated with latest events, news and activities at Elaaf School System Karachi — Sports Day, Science Exhibition, Annual Function and more.',
+  description: 'Stay updated with latest events, news and activities at Elaaf School System Karachi - Sports Day, Science Exhibition, Annual Function and more.',
   keywords: ['Elaaf school events', 'school news Karachi', 'school activities Karachi'],
   openGraph: {
     title: 'Events & News | Elaaf School System Karachi',

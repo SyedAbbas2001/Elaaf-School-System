@@ -19,6 +19,7 @@ const QuizSchema = new mongoose.Schema(
     code: { type: String, unique: true },
     timeLimitMin: { type: Number, default: 0 }, // 0 = no time limit
     status: { type: String, enum: ["draft", "published"], default: "draft" },
+    scheduledFor: { type: String, default: "", index: true }, // YYYY-MM-DD when the quiz was made for the quiz schedule
     questions: [QuestionSchema],
   },
   { timestamps: true }

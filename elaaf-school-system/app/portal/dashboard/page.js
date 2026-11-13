@@ -9,6 +9,7 @@ import User from "@/lib/models/User";
 import { CLASSES } from "@/lib/constants";
 import { todayPK, addDays, fmtDate, TZ } from "@/lib/dates";
 import { lastDays, dayNum, fmtShort, dayExpr, pctExpr } from "@/lib/stats";
+import QuizDuty from "@/components/portal/QuizDuty";
 import { StatTile, ChartCard, BarChart, HBars, LineChart, Donut, DayStrip } from "@/components/portal/charts";
 
 export const dynamic = "force-dynamic";
@@ -80,6 +81,8 @@ async function TeacherHome({ uid, today }) {
         </div>
         <Link className="pt-btn" href="/portal/dashboard/diary">{todayCount ? "Add another entry" : "Add today's entry"}</Link>
       </div>
+
+      <QuizDuty uid={uid} admin={false} />
 
       <div className="pt-stats">
         <StatTile i={2} value={quizzes.length} label="My quizzes" />
@@ -176,7 +179,7 @@ async function AdminHome({ today }) {
     DiaryEntry.distinct("teacher", { date: today }),
     DiaryEntry.countDocuments({ date: today }),
     DiaryEntry.countDocuments({ reviewed: false, date: { $gte: recentFrom } }),
-    DiaryEntry.find({ reviewed: false, date: { $gte: recentFrom } }).sort({ date: -1, createdAt: -1 }).limit(5).lean(),
+    DiaryEntry.find({ reviewed: false, date: { $gte: recentFrom } }).sort({ date: -1, createdAt: -1 }).limit(3).lean(),
     Quiz.countDocuments(),
     Quiz.countDocuments({ status: "published" }),
     Attempt.countDocuments({ createdAt: { $gte: weekAgo } }),
@@ -229,23 +232,29 @@ async function AdminHome({ today }) {
         <Link className="pt-btn alt" href="/portal/dashboard/quizzes/new">Create quiz</Link>
       </div>
 
-      <div className="pt-charts">
-        <ChartCard i={8} title="Diary submissions" hint="Teachers who added at least one entry each day, last 14 days">
-          <LineChart data={lineData} label="Number of teachers who submitted a diary entry on each of the last 14 days" />
-        </ChartCard>
-        <ChartCard i={9} title="Submitted today" hint="Active teachers with an entry dated today">
-          <Donut value={teachers.length - pending.length} total={teachers.length} label="Teachers who have submitted today" />
-        </ChartCard>
-        <ChartCard i={10} title="Quiz submissions" hint={`Last 14 days, ${subTotal} in total`}>
-          <BarChart data={subData} label={`Quiz submissions per day for the last 14 days, ${subTotal} in total`} />
-        </ChartCard>
-        <ChartCard i={11} title="Average quiz score by class" hint="Number of submissions in brackets">
-          <HBars rows={classRows} max={100} empty="Scores will appear here once students submit quizzes." />
-        </ChartCard>
-        <ChartCard i={12} title="Diary days this month" hint="Number of days each teacher added an entry">
-          <HBars rows={teacherRows} tone="crimson" empty="Add teacher accounts to see their diary activity." />
-        </ChartCard>
+      <div className="pt-two">
+        <QuizDuty uid="" admin />
+        <div className="pt-card pt-rise" style={{ "--i": 8 }}>
+          <h2 className="pt-card-title">Recent quizzes</h2>
+          {recentQuizzes.length === 0 ? (
+            <p className="pt-muted">No quizzes have been created yet.</p>
+          ) : (
+            <ul className="pt-list">
+              {recentQuizzes.map((q) => (
+                <li key={String(q._id)}>
+                  <div>
+                    <Link href={`/portal/dashboard/quizzes/${q._id}`}>{q.title}</Link>
+                    <span className="meta">{q.className}, {q.subject}, by {nameOf[String(q.teacher)] || "Unknown"}</span>
+                  </div>
+                  <span className={`pt-badge ${q.status === "published" ? "live" : ""}`}>{q.status === "published" ? "Published" : "Draft"}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+          <Link className="pt-more" href="/portal/dashboard/quizzes">See all quizzes</Link>
+        </div>
       </div>
+
 
       <div className="pt-two">
         <div className="pt-card pt-rise" style={{ "--i": 13 }}>
@@ -280,25 +289,22 @@ async function AdminHome({ today }) {
           <Link className="pt-more" href="/portal/dashboard/diary/all">Review in All diaries</Link>
         </div>
       </div>
-
-      <div className="pt-card pt-rise" style={{ "--i": 15 }}>
-        <h2 className="pt-card-title">Recent quizzes</h2>
-        {recentQuizzes.length === 0 ? (
-          <p className="pt-muted">No quizzes have been created yet.</p>
-        ) : (
-          <ul className="pt-list">
-            {recentQuizzes.map((q) => (
-              <li key={String(q._id)}>
-                <div>
-                  <Link href={`/portal/dashboard/quizzes/${q._id}`}>{q.title}</Link>
-                  <span className="meta">{q.className}, {q.subject}, by {nameOf[String(q.teacher)] || "Unknown"}</span>
-                </div>
-                <span className={`pt-badge ${q.status === "published" ? "live" : ""}`}>{q.status === "published" ? "Published" : "Draft"}</span>
-              </li>
-            ))}
-          </ul>
-        )}
-        <Link className="pt-more" href="/portal/dashboard/quizzes">See all quizzes</Link>
+        <div className="pt-charts">
+        <ChartCard i={8} title="Diary submissions" hint="Teachers who added at least one entry each day, last 14 days">
+          <LineChart data={lineData} label="Number of teachers who submitted a diary entry on each of the last 14 days" />
+        </ChartCard>
+        <ChartCard i={9} title="Submitted today" hint="Active teachers with an entry dated today">
+          <Donut value={teachers.length - pending.length} total={teachers.length} label="Teachers who have submitted today" />
+        </ChartCard>
+        <ChartCard i={10} title="Quiz submissions" hint={`Last 14 days, ${subTotal} in total`}>
+          <BarChart data={subData} label={`Quiz submissions per day for the last 14 days, ${subTotal} in total`} />
+        </ChartCard>
+        <ChartCard i={11} title="Average quiz score by class" hint="Number of submissions in brackets">
+          <HBars rows={classRows} max={100} empty="Scores will appear here once students submit quizzes." />
+        </ChartCard>
+        <ChartCard i={12} title="Diary days this month" hint="Number of days each teacher added an entry">
+          <HBars rows={teacherRows} tone="crimson" empty="Add teacher accounts to see their diary activity." />
+        </ChartCard>
       </div>
     </>
   );

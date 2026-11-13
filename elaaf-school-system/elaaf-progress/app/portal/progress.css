@@ -1,0 +1,12 @@
+/* Loading feedback: top progress bar and a page skeleton */
+.pt-progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,#C2151D,#d4a843);box-shadow:0 0 8px rgba(194,21,29,.5);border-radius:0 2px 2px 0;z-index:3000;pointer-events:none;transition:width .2s ease,opacity .3s ease}
+
+@keyframes pt-shimmer{0%{background-position:-800px 0}100%{background-position:800px 0}}
+.pt-skel{display:flex;flex-direction:column;gap:14px}
+.pt-skel-line,.pt-skel-box,.pt-skel-block{border-radius:8px;background:linear-gradient(90deg,var(--gray-200) 25%,var(--gray-100) 50%,var(--gray-200) 75%);background-size:800px 100%;animation:pt-shimmer 1.4s linear infinite}
+.pt-sk-title{height:28px;width:34%}
+.pt-sk-sub{height:14px;width:52%;margin-bottom:6px}
+.pt-skel-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.pt-skel-box{height:64px}
+.pt-skel-block{height:220px}
+@media (prefers-reduced-motion:reduce){.pt-skel-line,.pt-skel-box,.pt-skel-block{animation:none}.pt-progress{transition:none}}

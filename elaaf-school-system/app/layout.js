@@ -4,7 +4,7 @@ import Footer from '@/components/Footer';
 
 export const metadata = {
   title: { default: 'Elaaf School System', template: '%s | Elaaf School System' },
-  description: 'Elaaf School System — Quality Education in Karachi since 2010. Nursery to Matric. Committed to a Better Tomorrow. Admissions open for 2026-27.',
+  description: 'Elaaf School System - Quality Education in Karachi since 2010. Nursery to Matric. Committed to a Better Tomorrow. Admissions open for 2026-27.',
   keywords: [
     'Elaaf School System',
     'best school Karachi',
@@ -26,7 +26,7 @@ export const metadata = {
   },
   openGraph: {
     title: 'Elaaf School System Karachi',
-    description: 'Quality Education in Karachi since 2010 — Committed to a Better Tomorrow.',
+    description: 'Quality Education in Karachi since 2010 - Committed to a Better Tomorrow.',
     type: 'website',
     url: 'https://www.elaafschoolsystem.com',
     siteName: 'Elaaf School System',
@@ -35,7 +35,7 @@ export const metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Elaaf School System Karachi',
-    description: 'Quality Education in Karachi since 2010 — Committed to a Better Tomorrow.',
+    description: 'Quality Education in Karachi since 2010 - Committed to a Better Tomorrow.',
   },
   robots: {
     index: true,

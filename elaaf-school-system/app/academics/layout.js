@@ -4,7 +4,7 @@ export const metadata = {
   keywords: ['school curriculum Karachi', 'academics Karachi school', 'matric school Karachi', 'O level Karachi'],
   openGraph: {
     title: 'Academics & Curriculum | Elaaf School System Karachi',
-    description: 'From Nursery to Matric — a comprehensive curriculum built for excellence.',
+    description: 'From Nursery to Matric - a comprehensive curriculum built for excellence.',
     url: 'https://www.elaafschoolsystem.com/academics',
     siteName: 'Elaaf School System',
     type: 'website',

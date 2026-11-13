@@ -285,7 +285,7 @@ export default function HomePage() {
                   Elaaf School System was founded with a single mission: to provide world-class education rooted in Islamic values to the children of Karachi. Over the years, we've grown into a trusted institution with a proven track record of academic excellence.
                 </p>
                 <p style={{ color: 'var(--gray-600)', marginBottom: 32, lineHeight: 1.85 }}>
-                  Our dedicated faculty, modern curriculum, and nurturing environment ensure every student reaches their full potential — academically, morally, and personally.
+                  Our dedicated faculty, modern curriculum, and nurturing environment ensure every student reaches their full potential - academically, morally, and personally.
                 </p>
                 <div style={{ display: 'flex', gap: 12 }}>
                   <Link href="/about" style={{
@@ -531,7 +531,7 @@ export default function HomePage() {
               { icon: faMosque, title: 'Islamic Foundation', desc: 'Islamic studies, Quran recitation, and moral education integrated into daily school life building character from within.', color: '#7c3aed' },
               { icon: faCheckCircle, title: 'Strong Results', desc: 'Consistently high board exam results with students achieving top positions at district and provincial levels.', color: '#16a34a' },
               { icon: faUsers, title: 'Small Class Sizes', desc: 'Manageable class sizes ensure every student receives personal attention and the support they need to thrive.', color: '#2563eb' },
-              { icon: faFutbol, title: 'Co-Curricular', desc: 'Sports, arts, debates, science fairs and more — developing well-rounded students beyond academics.', color: '#C2151D' },
+              { icon: faFutbol, title: 'Co-Curricular', desc: 'Sports, arts, debates, science fairs and more - developing well-rounded students beyond academics.', color: '#C2151D' },
               { icon: faLaptop, title: 'Digital Learning', desc: 'Computer labs, digital tools and online resources preparing students for the modern world.', color: '#0891b2' },
             ].map((item, i) => (
               <Reveal key={item.title} delay={i * 0.08}>

@@ -26,15 +26,15 @@ const teamMembers = [
 const values = [
   { icon: faBook, title: 'Academic Excellence', desc: 'We uphold the highest standards of learning, preparing students for success in further education and life.', color: '#2563eb' },
   { icon: faMosque, title: 'Islamic Values', desc: 'Our curriculum is grounded in Islamic principles, fostering moral character, integrity, and spiritual growth.', color: '#7c3aed' },
-  { icon: faHandshake, title: 'Community', desc: 'We believe in the power of a strong school community — students, parents, and teachers working together.', color: '#16a34a' },
+  { icon: faHandshake, title: 'Community', desc: 'We believe in the power of a strong school community - students, parents, and teachers working together.', color: '#16a34a' },
   { icon: faLightbulb, title: 'Innovation', desc: 'Modern teaching methodologies, technology-enhanced classrooms, and creative problem-solving approaches.', color: '#d97706' },
-  { icon: faStar, title: 'Holistic Development', desc: 'Beyond academics — sports, arts, leadership, and co-curricular activities develop well-rounded individuals.', color: '#C2151D' },
+  { icon: faStar, title: 'Holistic Development', desc: 'Beyond academics - sports, arts, leadership, and co-curricular activities develop well-rounded individuals.', color: '#C2151D' },
   { icon: faHeart, title: 'Inclusivity', desc: 'Every child deserves quality education. We welcome students from all backgrounds with open arms.', color: '#db2777' },
 ];
 
 const missionCards = [
-  { icon: faBullseye, title: 'Our Mission', color: 'var(--crimson)', borderColor: 'var(--crimson)', desc: 'To provide affordable, high-quality education rooted in Islamic values that empowers every student to reach their full academic, moral, and personal potential — building confident citizens who contribute positively to society.' },
-  { icon: faBinoculars, title: 'Our Vision', color: 'var(--navy)', borderColor: 'var(--navy)', desc: "To be Karachi's most trusted educational institution — recognized for academic excellence, strong character development, and a nurturing environment where every child thrives and every family feels welcomed as part of our community." },
+  { icon: faBullseye, title: 'Our Mission', color: 'var(--crimson)', borderColor: 'var(--crimson)', desc: 'To provide affordable, high-quality education rooted in Islamic values that empowers every student to reach their full academic, moral, and personal potential - building confident citizens who contribute positively to society.' },
+  { icon: faBinoculars, title: 'Our Vision', color: 'var(--navy)', borderColor: 'var(--navy)', desc: "To be Karachi's most trusted educational institution - recognized for academic excellence, strong character development, and a nurturing environment where every child thrives and every family feels welcomed as part of our community." },
   { icon: faShieldAlt, title: 'Our Promise', color: '#d4a843', borderColor: '#d4a843', desc: 'We promise to treat every student as an individual, invest in their unique strengths, maintain open communication with families, and continuously improve our teaching standards to deliver the best possible educational experience.' },
 ];
 

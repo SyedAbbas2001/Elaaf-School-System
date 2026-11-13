@@ -1,6 +1,6 @@
 export const metadata = {
   title: 'About Us',
-  description: 'Elaaf School System Karachi — est. 2010. Learn about our mission, vision, qualified teachers and academic excellence from Nursery to Grade 10.',
+  description: 'Elaaf School System Karachi - est. 2010. Learn about our mission, vision, qualified teachers and academic excellence from Nursery to Grade 10.',
   keywords: ['Elaaf School System', 'school Karachi', 'about us', 'best school Karachi', 'private school Karachi'],
   openGraph: {
     title: 'About Elaaf School System | Karachi',
