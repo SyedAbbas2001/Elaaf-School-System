@@ -1,6 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap');
-
-@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Source+Sans+3:wght@400;500;600;700&display=swap');
 
 html {
   background: #0d1b3e;
@@ -20,8 +18,8 @@ html {
   --gray-400: #94a3b8;
   --gray-600: #475569;
   --gray-800: #1e293b;
-  --font-display: 'Nunito Sans', sans-serif;
-  --font-body: 'Nunito Sans', sans-serif;
+  --font-display: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-body: 'Source Sans 3', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
   --shadow-md: 0 4px 20px rgba(0,0,0,0.1);
   --shadow-lg: 0 20px 60px rgba(0,0,0,0.15);
@@ -60,6 +58,10 @@ html, body {
 html { scroll-behavior: smooth; }
 
 body {
+  font-size: 18px;
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+text-rendering: optimizeLegibility;
   font-family: var(--font-body);
   background: var(--cream);
   color: var(--navy);
@@ -123,7 +125,10 @@ body {
     grid-template-columns: 1fr;
   }
 }
-h1, h2, h3, h4 { font-family: var(--font-display); line-height: 1.2; }
+h1, h2, h3, h4 { font-family: var(--font-display); line-height: 1.2;
+letter-spacing: -0.02em;
+font-weight: 700;
+}
 
 a { text-decoration: none; color: inherit; }
 
