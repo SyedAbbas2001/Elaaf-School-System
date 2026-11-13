@@ -116,7 +116,7 @@ async function TeacherHome({ uid, today }) {
             <p className="pt-muted">You have not created any quizzes yet.</p>
           ) : (
             <ul className="pt-list">
-              {quizzes.slice(0, 5).map((q) => (
+              {quizzes.slice(0, 3).map((q) => (
                 <li key={String(q._id)}>
                   <div>
                     <Link href={`/portal/dashboard/quizzes/${q._id}`}>{q.title}</Link>
@@ -183,7 +183,7 @@ async function AdminHome({ today }) {
     Quiz.countDocuments(),
     Quiz.countDocuments({ status: "published" }),
     Attempt.countDocuments({ createdAt: { $gte: weekAgo } }),
-    Quiz.find().sort({ createdAt: -1 }).limit(5).select("title className subject status teacher").lean(),
+    Quiz.find().sort({ createdAt: -1 }).limit(3).select("title className subject status teacher").lean(),
     DiaryEntry.aggregate([{ $match: { date: { $gte: days[0] } } }, { $group: { _id: { d: "$date", t: "$teacher" } } }, { $group: { _id: "$_id.d", n: { $sum: 1 } } }]),
     Attempt.aggregate([{ $match: { createdAt: { $gte: since() } } }, { $group: { _id: dayExpr, n: { $sum: 1 } } }]),
     Attempt.aggregate([{ $group: { _id: "$className", avg: { $avg: pctExpr }, n: { $sum: 1 } } }]),
